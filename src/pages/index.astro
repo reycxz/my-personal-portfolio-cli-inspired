@@ -258,7 +258,35 @@ import { SITE_DESCRIPTION, SITE_TITLE, terminalConfig } from "../consts";
 					} else if (command === "cd blogs" || command === "cd blog") {
 						window.location.href = "/blogs";
 					} else if (command === "cd profile" || command === "cd ~" || command === "cd") {
-						window.location.href = "/";
+						renderOutput([
+							"┌─────────────────────────────────────────────────┐",
+							"│               👤  PROFILE                       │",
+							"└─────────────────────────────────────────────────┘",
+							"",
+							"  Name       : Rey Lorenz Cabanog",
+							"  Username   : reycxz",
+							"  Title      : Full Stack Developer & Cyber Security Enthusiast",
+							"             : Computer Engineering Student",
+							"  Location   : Navotas City, PH",
+							"  Email      : reylorenzc@gmail.com",
+							"",
+							"  Bio        : I'm a passionate developer who loves creating",
+							"             : innovative solutions and learning new technologies.",
+							"",
+							"  🔭 Current Focus:",
+							"    • Developing a multi-agency booking platform using Laravel",
+							"    • Advancing in SOC Operations and Digital Forensics (DFIR)",
+							"    • Contributing to open source projects",
+							"    • Completing CE degree at TIP Manila (Class of 2027)",
+							"",
+							"  🌐 Social Links:",
+							"    • GitHub   : https://github.com/reycxz",
+							"    • LinkedIn : https://www.linkedin.com/in/reylorenzc/",
+							"    • Messenger: https://m.me/ReylorenzCabanog",
+							"",
+							"  ⚡ Fun Fact : I am a working student. I juggle work and class.",
+							""
+						], "var(--theme-primary)", commandStr);
 					} else if (command === "help" || command === "h") {
 						renderOutput([
 							"Available commands:",
@@ -269,6 +297,7 @@ import { SITE_DESCRIPTION, SITE_TITLE, terminalConfig } from "../consts";
 							" - clear: Clear the terminal",
 							" - cd projects: Navigate to projects",
 							" - cd blogs: Navigate to blogs",
+							" - cd profile: Display profile information",
 							" - ls: List directories"
 						], "var(--theme-outputText)", commandStr);
 					} else if (command === "clear" || command === "cls") {
