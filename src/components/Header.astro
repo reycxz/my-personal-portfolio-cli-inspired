@@ -60,7 +60,7 @@ const timeString = date.toLocaleTimeString();
 
 			{/* Right side - Navigation commands & Theme selector */}
 			<div
-				class="flex items-center space-x-2 sm:space-x-4 text-xs sm:text-sm"
+				class="flex items-center space-x-2 sm:space-x-3 text-xs sm:text-sm"
 			>
 				{/* Theme toggle button */}
 				<!-- <button
@@ -97,24 +97,18 @@ const timeString = date.toLocaleTimeString();
 									href={link.path}
 									target="_blank"
 									rel="noopener noreferrer"
-									class="inline-flex items-center gap-0 hover:opacity-75 font-source tracking-wide transition-opacity"
-									style={{
-										color:
-											link.color || "var(--theme-muted)",
-									}}
+									class="nav-command inline-flex items-center rounded px-1.5 py-0.5 font-source tracking-wide transition-colors"
+									title={`Open ${link.name}`}
 								>
-									<span class="hidden sm:inline">{link.name === "messenger" ? "@" : link.name === "gh" ? "git://" : "./"}</span><span>{link.name}</span>
+									<span>{link.name}</span>
 								</a>
 							) : (
 								<a
 									href={link.path}
-									class="inline-flex items-center gap-0 hover:opacity-75 font-source tracking-wide transition-opacity"
-									style={{
-										color:
-											link.color || "var(--theme-muted)",
-									}}
+									class="nav-command inline-flex items-center rounded px-1.5 py-0.5 font-source tracking-wide transition-colors"
+									title={`Go to ${link.name}`}
 								>
-									<span class="hidden sm:inline">{link.name === "home" ? "~/" : "./"}</span><span>{link.name}</span>
+									<span>{link.name}</span>
 								</a>
 							)}
 						</span>
@@ -136,6 +130,19 @@ const timeString = date.toLocaleTimeString();
 		}
 	</div>
 </nav>
+
+<style>
+	.nav-command {
+		color: var(--theme-primary);
+		border: 1px solid transparent;
+	}
+
+	.nav-command:hover {
+		color: var(--theme-background);
+		background-color: var(--theme-primary);
+		border-color: var(--theme-primary);
+	}
+</style>
 
 <script>
 	import { getThemeDisplayNames } from "../utils/theme";

@@ -486,10 +486,10 @@ import { resumePdfPath, terminalResumeLines } from "../data/resume";
 				}
 
 				// ── Navigation ────────────────────────────────────────────
-				if (command === "cd projects" || command === "cd project" || command === "./projects" || command === "./ projects") {
+				if (command === "cd projects" || command === "cd project" || command === "./projects" || command === "./ projects" || command === "projects") {
 					window.location.href = "/projects";
 
-				} else if (command === "cd blogs" || command === "cd blog" || command === "./blogs" || command === "./ blogs") {
+				} else if (command === "cd blogs" || command === "cd blog" || command === "./blogs" || command === "./ blogs" || command === "blogs") {
 					window.location.href = "/blogs";
 
 				} else if (command === "resume" || command === "cv" || command === "open resume" || command === "./resume" || command === "./ resume") {
@@ -610,6 +610,19 @@ import { resumePdfPath, terminalResumeLines } from "../data/resume";
 						);
 					}
 
+				} else if (command === "shortcuts" || command === "nav") {
+					renderOutput([
+						"Header shortcuts:",
+						"  resume     - Open the resume page",
+						"  blogs      - Open blog posts",
+						"  projects   - Open projects page",
+						"  messenger  - Open Messenger",
+						"  gh         - Open GitHub",
+						"",
+						"These match the labels shown in the top navigation.",
+						"",
+					], "var(--theme-info)", commandStr);
+
 				} else if (command === "games") {
 					renderOutput([
 						"Available terminal games:",
@@ -656,6 +669,7 @@ import { resumePdfPath, terminalResumeLines } from "../data/resume";
 						"",
 						"  Misc:",
 						"   history          — Show command history",
+						"   shortcuts / nav  — Show top navigation aliases",
 						"   games            — List available terminal games",
 						"   numberguess      — Start number guessing game",
 						"   rps              — Start rock paper scissors",
@@ -743,9 +757,10 @@ import { resumePdfPath, terminalResumeLines } from "../data/resume";
 				const current = inputCapture.value.toLowerCase();
 				const commands = [
 					"help", "whoami", "contact", "neofetch", "skills", "joke", "history",
+					"shortcuts", "nav",
 					"clear", "cat resume.txt", "resume", "cv", "open resume", "games",
 					"numberguess", "rps", "wordle", "cd projects", "cd blogs", "cd profile", "cd ~",
-					"./projects", "./blogs", "./resume", "gh", "git", "messenger", "@messenger",
+					"projects", "blogs", "./projects", "./blogs", "./resume", "gh", "git", "messenger", "@messenger",
 					"ls", "ll", "open github", "open linkedin", "open messenger", "download resume", "exit"
 				];
 				const match = commands.find(cmd => cmd.startsWith(current));
