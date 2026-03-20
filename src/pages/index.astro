@@ -486,13 +486,13 @@ import { resumePdfPath, terminalResumeLines } from "../data/resume";
 				}
 
 				// ── Navigation ────────────────────────────────────────────
-				if (command === "cd projects" || command === "cd project") {
+				if (command === "cd projects" || command === "cd project" || command === "./projects" || command === "./ projects") {
 					window.location.href = "/projects";
 
-				} else if (command === "cd blogs" || command === "cd blog") {
+				} else if (command === "cd blogs" || command === "cd blog" || command === "./blogs" || command === "./ blogs") {
 					window.location.href = "/blogs";
 
-				} else if (command === "resume" || command === "cv" || command === "open resume") {
+				} else if (command === "resume" || command === "cv" || command === "open resume" || command === "./resume" || command === "./ resume") {
 					window.location.href = "/resume";
 
 				} else if (command === "cd profile" || command === "cd ~" || command === "cd~" || command === "cd home" || command === "cd") {
@@ -582,7 +582,7 @@ import { resumePdfPath, terminalResumeLines } from "../data/resume";
 						""
 					], "var(--theme-info)", commandStr);
 
-				} else if (command === "open github") {
+				} else if (command === "open github" || command === "gh" || command === "github" || command === "git" || command === "./gh" || command === "git://gh") {
 					window.open("https://github.com/reycxz", "_blank", "noopener,noreferrer");
 					renderOutput(["  ↗ Opening GitHub profile in a new tab...", ""], "var(--theme-primary)", commandStr);
 
@@ -590,7 +590,7 @@ import { resumePdfPath, terminalResumeLines } from "../data/resume";
 					window.open("https://www.linkedin.com/in/reylorenzc/", "_blank", "noopener,noreferrer");
 					renderOutput(["  ↗ Opening LinkedIn profile in a new tab...", ""], "var(--theme-primary)", commandStr);
 
-				} else if (command === "open messenger") {
+				} else if (command === "open messenger" || command === "messenger" || command === "@messenger") {
 					window.open("https://m.me/ReylorenzCabanog", "_blank", "noopener,noreferrer");
 					renderOutput(["  ↗ Opening Messenger in a new tab...", ""], "var(--theme-primary)", commandStr);
 
@@ -745,6 +745,7 @@ import { resumePdfPath, terminalResumeLines } from "../data/resume";
 					"help", "whoami", "contact", "neofetch", "skills", "joke", "history",
 					"clear", "cat resume.txt", "resume", "cv", "open resume", "games",
 					"numberguess", "rps", "wordle", "cd projects", "cd blogs", "cd profile", "cd ~",
+					"./projects", "./blogs", "./resume", "gh", "git", "messenger", "@messenger",
 					"ls", "ll", "open github", "open linkedin", "open messenger", "download resume", "exit"
 				];
 				const match = commands.find(cmd => cmd.startsWith(current));

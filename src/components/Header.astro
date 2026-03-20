@@ -97,34 +97,24 @@ const timeString = date.toLocaleTimeString();
 									href={link.path}
 									target="_blank"
 									rel="noopener noreferrer"
-									class="hover:opacity-75 font-source tracking-wide transition-opacity"
+									class="inline-flex items-center gap-0 hover:opacity-75 font-source tracking-wide transition-opacity"
 									style={{
 										color:
 											link.color || "var(--theme-muted)",
 									}}
 								>
-									<span class="hidden sm:inline">
-										{link.name === "messenger"
-											? "@"
-											: link.name === "gh"
-												? "git://"
-												: "./"}
-									</span>
-									{link.name}
+									<span class="hidden sm:inline">{link.name === "messenger" ? "@" : link.name === "gh" ? "git://" : "./"}</span><span>{link.name}</span>
 								</a>
 							) : (
 								<a
 									href={link.path}
-									class="hover:opacity-75 font-source tracking-wide transition-opacity"
+									class="inline-flex items-center gap-0 hover:opacity-75 font-source tracking-wide transition-opacity"
 									style={{
 										color:
 											link.color || "var(--theme-muted)",
 									}}
 								>
-									<span class="hidden sm:inline">
-										{link.name === "home" ? "~/" : "./"}
-									</span>
-									{link.name}
+									<span class="hidden sm:inline">{link.name === "home" ? "~/" : "./"}</span><span>{link.name}</span>
 								</a>
 							)}
 						</span>

@@ -379,12 +379,12 @@ export const profileConfig: ProfileConfig = {
     brandName: "iamrey.dev",
     brandUrl: "/",
     links: [
-      { name: "resume", path: "/resume", color: "var(--theme-accent)" },
+      { name: "resume", path: "/resume", color: "var(--theme-primary)" },
       { name: "blogs", path: "/blogs", color: "var(--theme-primary)" },
-      { name: "projects", path: "/projects", color: "var(--theme-secondary)" },
+      { name: "projects", path: "/projects", color: "var(--theme-primary)" },
       // { name: "profile", path: "/profile", color: "var(--theme-accent)" },
-      { name: "messenger", path: "https://m.me/reylorenzcabanog", external: true, color: "var(--theme-muted)" },
-      { name: "gh", path: "https://github.com/reycxz/", external: true, color: "var(--theme-muted)" }
+      { name: "messenger", path: "https://m.me/reylorenzcabanog", external: true, color: "var(--theme-primary)" },
+      { name: "gh", path: "https://github.com/reycxz/", external: true, color: "var(--theme-primary)" }
     ],
     systemInfo: {
       // os: "Linux 6.1.0",
