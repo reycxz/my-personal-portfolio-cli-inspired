@@ -78,6 +78,7 @@ import { SITE_DESCRIPTION, SITE_TITLE, terminalConfig } from "../consts";
 									╭────────────────────────────╮
 								</div>
 								<div
+									id="welcome-title"
 									class="text-l sm:text-xl font-bold mb-1"
 									style={{ color: "var(--theme-primary)" }}
 								>
@@ -226,153 +227,300 @@ import { SITE_DESCRIPTION, SITE_TITLE, terminalConfig } from "../consts";
 		</div>
 	</body>
 </html>
+<style>
+	@keyframes blink {
+		0%, 100% { opacity: 1; }
+		50% { opacity: 0; }
+	}
+	.cursor-blink {
+		animation: blink 1s step-start infinite;
+		color: var(--theme-primary);
+	}
+	input[type="text"] {
+		caret-color: #22c55e;
+	}
+</style>
 <script>
+	// ── Typing animation on welcome title ──────────────────────────────────
+	const welcomeTitle = document.getElementById("welcome-title");
+	if (welcomeTitle) {
+		const fullText = welcomeTitle.textContent?.trim() ?? "";
+		welcomeTitle.textContent = "";
+		const cursor = document.createElement("span");
+		cursor.className = "cursor-blink";
+		cursor.textContent = "█";
+		welcomeTitle.appendChild(cursor);
+		let i = 0;
+		const typeInterval = setInterval(() => {
+			if (i < fullText.length) {
+				welcomeTitle.insertBefore(document.createTextNode(fullText[i]), cursor);
+				i++;
+			} else {
+				clearInterval(typeInterval);
+			}
+		}, 40);
+	}
+
+	// ── Terminal input logic ───────────────────────────────────────────────
 	const inputCapture = document.querySelector("input");
 	if (inputCapture) {
-		const commandHistory = [];
+		const commandHistory: string[] = [];
 		let historyIndex = -1;
 
-		// disable welcome box input
 		inputCapture.focus();
-		// Keep focus on input
 		document.addEventListener("click", () => inputCapture.focus());
+
+		function clearTerminal() {
+			const commandOutput = document.getElementById("command-output");
+			if (commandOutput) {
+				commandOutput.innerHTML = "";
+				commandOutput.style.display = "none";
+			}
+			inputCapture!.value = "";
+		}
 
 		inputCapture.addEventListener("keydown", (e) => {
 			if (e.key === "Enter") {
 				const welcomeBox = document.getElementById("welcome-box");
-				if (welcomeBox) {
-					welcomeBox.style.display = "none";
-				}
-				e.preventDefault();
-				// Here you can handle the command input
-				const commandStr = inputCapture.value.trim();
-				if (commandStr) {
-					commandHistory.push(commandStr);
-					historyIndex = commandHistory.length;
+				if (welcomeBox) welcomeBox.style.display = "none";
 
-					const command = commandStr.toLowerCase();
-					console.log("Command entered:", command);
-					// Clear input after processing
-					if (command === "cd projects" || command === "cd project") {
-						window.location.href = "/projects";
-					} else if (command === "cd blogs" || command === "cd blog") {
-						window.location.href = "/blogs";
-					} else if (command === "cd profile" || command === "cd ~" || command === "cd") {
-						renderOutput([
-							"┌─────────────────────────────────────────────────┐",
-							"│               👤  PROFILE                       │",
-							"└─────────────────────────────────────────────────┘",
-							"",
-							"  Name       : Rey Lorenz Cabanog",
-							"  Username   : reycxz",
-							"  Title      : Full Stack Developer & Cyber Security Enthusiast",
-							"             : Computer Engineering Student",
-							"  Location   : Navotas City, PH",
-							"  Email      : reylorenzc@gmail.com",
-							"",
-							"  Bio        : I'm a passionate developer who loves creating",
-							"             : innovative solutions and learning new technologies.",
-							"",
-							"  🔭 Current Focus:",
-							"    • Developing a multi-agency booking platform using Laravel",
-							"    • Advancing in SOC Operations and Digital Forensics (DFIR)",
-							"    • Contributing to open source projects",
-							"    • Completing CE degree at TIP Manila (Class of 2027)",
-							"",
-							"  🌐 Social Links:",
-							"    • GitHub   : https://github.com/reycxz",
-							"    • LinkedIn : https://www.linkedin.com/in/reylorenzc/",
-							"    • Messenger: https://m.me/ReylorenzCabanog",
-							"",
-							"  ⚡ Fun Fact : I am a working student. I juggle work and class.",
-							""
-						], "var(--theme-primary)", commandStr);
-					} else if (command === "help" || command === "h") {
-						renderOutput([
-							"Available commands:",
-							" - help: Show this help message",
-							" - neofetch: Display system information",
-							" - skills: List my skills",
-							" - joke: Tell a joke",
-							" - clear: Clear the terminal",
-							" - cd projects: Navigate to projects",
-							" - cd blogs: Navigate to blogs",
-							" - cd profile: Display profile information",
-							" - ls: List directories"
-						], "var(--theme-outputText)", commandStr);
-					} else if (command === "clear" || command === "cls") {
-						// Clear terminal (for simplicity, just reload)
-						location.reload();
-					} else if (command === "ls" || command === "ll") {
-						renderOutput([
-							"drwxr-xr-x 2 user user 4096 Mar 20 18:00 blogs",
-							"drwxr-xr-x 2 user user 4096 Mar 20 18:00 projects",
-							"-rw-r--r-- 1 user user 1024 Mar 20 18:00 profile"
-						], "var(--theme-info)", commandStr);
-					} else if (command === "..") {
-						renderOutput([`bash: ..: command not found (You are already at the root directory)`], "var(--theme-warning)", commandStr);
-					} else if (command === "neofetch") {
-						renderOutput([
-							"user@iamrey.dev",
-							"----------------",
-							"OS: Linux 6.15.0",
-							"Host: Terminal Portfolio",
-							"Kernel: x86_64",
-							"Uptime: 2 days, 4 hours, 20 mins",
-							"Packages: 392 (npm)",
-							"Shell: bash",
-							"Theme: Dark Terminal",
-							"Terminal: Web",
-							"CPU: WebAssembly Core i9",
-							"Memory: 1024MB / 8192MB",
-                            ""
-						], "var(--theme-info)", commandStr);
-					} else if (command === "skills") {
-						renderOutput([
-							"- Full Stack Developer (Javascript/Typescript, Python, PHP)",
-							"- Frontend: React.js, Astro, Tailwind CSS, Solid",
-							"- Backend: Node.js, Express, Laravel",
-							"- Tools: Git, Docker, Linux",
-							"- Security: DFIR, Network Security",
-                            ""
-						], "var(--theme-secondary)", commandStr);
-					} else if (command === "joke") {
-						const jokes = [
-							"Why do programmers prefer dark mode? Because light attracts bugs.",
-							"I've got a really good UDP joke to tell you, but I don't know if you'll get it.",
-							"There are 10 types of people in this world: Those who understand binary, and those who don't.",
-							"A SQL query goes into a bar, walks up to two tables and asks... 'Can I join you?'",
-							"How many programmers does it take to change a light bulb? None, that's a hardware problem.",
-							"A SEO expert walks into a bar, bars, pub, tavern, public house, Irish pub, drinks, beer, alcohol.",
-							"Why did the programmer quit his job? Because he didn't get arrays.",
-							"Why do Java developers wear glasses? Because they can't C#.",
-							"What is the most used language in programming? Profanity.",
-							"An IPv6 packet walks into a bar. Nobody talks to him.",
-							"Why was the JavaScript developer sad? Because he didn't Node how to Express himself.",
-							"Why did the router break up with the modem? There was no connection.",
-							"Knock, knock. Who's there? ...very long pause... Java.",
-							"What's the best thing about boolean dreams? They're either true or false.",
-							"A byte walks into a bar and orders a pint. Bartender asks 'What's wrong?'. Byte says 'Parity error'. Bartender nods and says 'Yeah, I thought you looked a bit off.'",
-							"Why did the web developer leave the restaurant? Because of the terrible table layout.",
-							"If you listen closely to a shell, you can hear... the ocean? No, you can hear: rm -rf /",
-							"Why did the hacker get chilly? Because he left the Windows open.",
-							"What's a cyber expert's favorite animal? A phishing cat.",
-							"I would tell you a joke about DNS, but it might take 24 to 48 hours to propagate.",
-							"There are two hard things in computer science: cache invalidation, naming things, and off-by-one errors."
-						];
-						
-						let jokeIndex;
-						do {
-							jokeIndex = Math.floor(Math.random() * jokes.length);
-						} while (jokeIndex === window.lastJokeIndex);
-						window.lastJokeIndex = jokeIndex;
-						
-						renderOutput([jokes[jokeIndex], ""], "var(--theme-accent)", commandStr);
+				e.preventDefault();
+				const commandStr = inputCapture.value.trim();
+				if (!commandStr) return;
+
+				commandHistory.push(commandStr);
+				historyIndex = commandHistory.length;
+
+				const command = commandStr.toLowerCase();
+
+				// ── Navigation ────────────────────────────────────────────
+				if (command === "cd projects" || command === "cd project") {
+					window.location.href = "/projects";
+
+				} else if (command === "cd blogs" || command === "cd blog") {
+					window.location.href = "/blogs";
+
+				} else if (command === "cd profile" || command === "cd ~" || command === "cd home") {
+					renderOutput([
+						"┌──────────────────────────────────────────────────┐",
+						"│                  👤  PROFILE                      │",
+						"└──────────────────────────────────────────────────┘",
+						"",
+						"  Name       : Rey Lorenz Cabanog",
+						"  Username   : reycxz",
+						"  Title      : Full Stack Developer & Cyber Security Enthusiast",
+						"             : Computer Engineering Student",
+						"  Location   : Navotas City, PH",
+						"  Email      : reylorenzc@gmail.com",
+						"",
+						"  Bio        : I'm a passionate developer who loves creating",
+						"             : innovative solutions and learning new technologies.",
+						"",
+						"  🔭 Current Focus:",
+						"    • Developing a multi-agency booking platform using Laravel",
+						"    • Advancing in SOC Operations and Digital Forensics (DFIR)",
+						"    • Contributing to open source projects",
+						"    • Completing CE degree at TIP Manila (Class of 2027)",
+						"",
+						"  🌐 Social Links:",
+						"    • GitHub   : https://github.com/reycxz",
+						"    • LinkedIn : https://www.linkedin.com/in/reylorenzc/",
+						"    • Messenger: https://m.me/ReylorenzCabanog",
+						"",
+						"  ⚡ Fun Fact : I am a working student. I juggle work and class.",
+						""
+					], "var(--theme-primary)", commandStr);
+
+				// ── About ─────────────────────────────────────────────────
+				} else if (command === "whoami") {
+					renderOutput([
+						"reycxz — Rey Lorenz Cabanog",
+						"Full Stack Developer & Cyber Security Enthusiast",
+						"Computer Engineering Student @ TIP Manila",
+						"Navotas City, PH  |  reylorenzc@gmail.com",
+						""
+					], "var(--theme-primary)", commandStr);
+
+				} else if (command === "cat resume.txt") {
+					renderOutput([
+						"┌──────────────────────────────────────────────────┐",
+						"│                  📄  RESUME                       │",
+						"└──────────────────────────────────────────────────┘",
+						"",
+						"  Rey Lorenz Cabanog",
+						"  Full Stack Developer & Cyber Security Enthusiast",
+						"",
+						"  🎓 EDUCATION",
+						"    TIP Manila — BS Computer Engineering (Class of 2027)",
+						"",
+						"  🛠️  SKILLS",
+						"    Languages : PHP, JavaScript, TypeScript, Python, C++, SQL",
+						"    Frameworks: Laravel, React.js, Astro, Tailwind CSS",
+						"    Tools     : Git, Docker, Linux, Cisco Networking",
+						"    Security  : DFIR, SOC Operations, Network Security",
+						"",
+						"  🔭 CURRENT FOCUS",
+						"    • Multi-agency booking platform using Laravel",
+						"    • SOC Operations & Digital Forensics (DFIR)",
+						"    • Contributing to open source projects",
+						"    • CE Degree @ TIP Manila",
+						"",
+						"  📊 STATS",
+						"    Projects     : 4+",
+						"    GitHub Repos : 12",
+						"    Streak       : 29 days",
+						""
+					], "var(--theme-outputText)", commandStr);
+
+				} else if (command === "neofetch") {
+					renderOutput([
+						"  reycxz@iamrey.dev",
+						"  -----------------",
+						"  User   : Rey Lorenz Cabanog",
+						"  Role   : Full Stack Dev & CySec Enthusiast",
+						"  School : TIP Manila — CE (Class of 2027)",
+						"  Loc    : Navotas City, PH",
+						"  OS     : Linux x86_64",
+						"  Shell  : bash",
+						"  Theme  : Dark Terminal",
+						"  Pkgs   : 392 (npm)",
+						"  GitHub : github.com/reycxz",
+						"  Memory : 1024MB / 8192MB",
+						""
+					], "var(--theme-info)", commandStr);
+
+				} else if (command === "skills") {
+					renderOutput([
+						"  Languages  : PHP, JavaScript, TypeScript, Python, C++, SQL",
+						"  Frameworks : Laravel, React.js, Astro, Tailwind CSS",
+						"  Tools      : Git, Docker, Linux, Cisco Networking",
+						"  Security   : DFIR, SOC Operations, Network Security",
+						""
+					], "var(--theme-secondary)", commandStr);
+
+				// ── Contact ───────────────────────────────────────────────
+				} else if (command === "contact") {
+					renderOutput([
+						"┌──────────────────────────────────────────────────┐",
+						"│                  📬  CONTACT                      │",
+						"└──────────────────────────────────────────────────┘",
+						"",
+						"  GitHub   : https://github.com/reycxz",
+						"  LinkedIn : https://www.linkedin.com/in/reylorenzc/",
+						"  Email    : reylorenzc@gmail.com",
+						"  Messenger: https://m.me/ReylorenzCabanog",
+						"",
+						"  Tip: type 'open github', 'open linkedin', or 'open messenger'",
+						"       to open links directly in a new tab.",
+						""
+					], "var(--theme-info)", commandStr);
+
+				} else if (command === "open github") {
+					window.open("https://github.com/reycxz", "_blank", "noopener,noreferrer");
+					renderOutput(["  ↗ Opening GitHub profile in a new tab...", ""], "var(--theme-primary)", commandStr);
+
+				} else if (command === "open linkedin") {
+					window.open("https://www.linkedin.com/in/reylorenzc/", "_blank", "noopener,noreferrer");
+					renderOutput(["  ↗ Opening LinkedIn profile in a new tab...", ""], "var(--theme-primary)", commandStr);
+
+				} else if (command === "open messenger") {
+					window.open("https://m.me/ReylorenzCabanog", "_blank", "noopener,noreferrer");
+					renderOutput(["  ↗ Opening Messenger in a new tab...", ""], "var(--theme-primary)", commandStr);
+
+				// ── Misc ──────────────────────────────────────────────────
+				} else if (command === "history") {
+					const hist = commandHistory.slice(0, -1);
+					if (hist.length === 0) {
+						renderOutput(["  No command history yet.", ""], "var(--theme-muted)", commandStr);
 					} else {
-						renderOutput([`bash: ${commandStr}: command not found`, ""], "var(--theme-error)", commandStr);
+						renderOutput(
+							hist.map((cmd, i) => `  ${String(i + 1).padStart(3)}  ${cmd}`).concat([""]),
+							"var(--theme-outputText)", commandStr
+						);
 					}
-					inputCapture.value = "";
+
+				} else if (command === "help" || command === "h") {
+					renderOutput([
+						"  Available commands:",
+						"",
+						"  Navigation:",
+						"   cd projects      — Browse GitHub projects",
+						"   cd blogs         — Browse blog posts",
+						"   ls               — List available sections",
+						"",
+						"  About:",
+						"   whoami           — Quick identity summary",
+						"   cd profile       — Detailed profile card",
+						"   cat resume.txt   — View resume",
+						"   skills           — List skills & technologies",
+						"   neofetch         — System / profile info",
+						"",
+						"  Contact:",
+						"   contact          — Show all contact links",
+						"   open github      — Open GitHub in new tab",
+						"   open linkedin    — Open LinkedIn in new tab",
+						"   open messenger   — Open Messenger in new tab",
+						"",
+						"  Misc:",
+						"   history          — Show command history",
+						"   joke             — Random dev joke",
+						"   clear / cls      — Clear terminal",
+						"   help / h         — Show this message",
+						""
+					], "var(--theme-outputText)", commandStr);
+
+				} else if (command === "clear" || command === "cls") {
+					clearTerminal();
+					return;
+
+				} else if (command === "ls" || command === "ll") {
+					renderOutput([
+						"drwxr-xr-x  user  blogs/",
+						"drwxr-xr-x  user  projects/",
+						"-rw-r--r--  user  profile",
+						"-rw-r--r--  user  resume.txt",
+						""
+					], "var(--theme-info)", commandStr);
+
+				} else if (command === "..") {
+					renderOutput(["bash: ..: command not found (already at root)"], "var(--theme-warning)", commandStr);
+
+				} else if (command === "joke") {
+					const jokes = [
+						"Why do programmers prefer dark mode? Because light attracts bugs.",
+						"I've got a really good UDP joke, but I don't know if you'll get it.",
+						"There are 10 types of people: those who understand binary, and those who don't.",
+						"A SQL query walks into a bar, walks up to two tables and asks... 'Can I join you?'",
+						"How many programmers does it take to change a light bulb? None, that's a hardware problem.",
+						"A SEO expert walks into a bar, bars, pub, tavern, public house, Irish pub, drinks, beer, alcohol.",
+						"Why did the programmer quit? Because he didn't get arrays.",
+						"Why do Java devs wear glasses? Because they can't C#.",
+						"The most used language in programming? Profanity.",
+						"An IPv6 packet walks into a bar. Nobody talks to him.",
+						"Why was the JS developer sad? He didn't Node how to Express himself.",
+						"Why did the router break up with the modem? There was no connection.",
+						"Knock, knock. Who's there? ...very long pause... Java.",
+						"What's the best thing about boolean dreams? They're either true or false.",
+						"Why did the web developer leave the restaurant? Terrible table layout.",
+						"If you listen to a shell, you can hear: rm -rf /",
+						"Why did the hacker get chilly? He left the Windows open.",
+						"What's a cyber expert's favorite animal? A phishing cat.",
+						"I'd tell you a joke about DNS, but it might take 24-48 hours to propagate.",
+						"Two hard things in CS: cache invalidation, naming things, and off-by-one errors."
+					];
+					let jokeIndex: number;
+					do {
+						jokeIndex = Math.floor(Math.random() * jokes.length);
+					} while (jokeIndex === (window as any).lastJokeIndex);
+					(window as any).lastJokeIndex = jokeIndex;
+					renderOutput([jokes[jokeIndex], ""], "var(--theme-accent)", commandStr);
+
+				} else {
+					renderOutput([`bash: ${commandStr}: command not found`, ""], "var(--theme-error)", commandStr);
 				}
+
+				inputCapture.value = "";
+
 			} else if (e.key === "ArrowUp") {
 				e.preventDefault();
 				if (historyIndex > 0) {
@@ -390,59 +538,57 @@ import { SITE_DESCRIPTION, SITE_TITLE, terminalConfig } from "../consts";
 				}
 			} else if (e.key === "l" && e.ctrlKey) {
 				e.preventDefault();
-				location.reload();
+				clearTerminal();
 			} else if (e.key === "Tab") {
 				e.preventDefault();
 				const current = inputCapture.value.toLowerCase();
-				const commands = ["help", "neofetch", "skills", "joke", "clear", "cd projects", "cd blogs", "cd profile", "ls", "ll"];
+				const commands = [
+					"help", "whoami", "contact", "neofetch", "skills", "joke", "history",
+					"clear", "cat resume.txt", "cd projects", "cd blogs", "cd profile",
+					"ls", "ll", "open github", "open linkedin", "open messenger"
+				];
 				const match = commands.find(cmd => cmd.startsWith(current));
-				if (match) {
-					inputCapture.value = match;
-				}
+				if (match) inputCapture.value = match;
 			}
 		});
 
-		function renderOutput(lines, defaultColor, cmdString) {
+		function renderOutput(lines: string[], defaultColor: string, cmdString: string) {
 			const commandOutput = document.getElementById("command-output");
-			if (commandOutput) {
-				commandOutput.style.display = "block";
-				
-				const outputDiv = document.createElement("div");
-				outputDiv.className = "space-y-1 mt-4";
-				
-				// Optional: show the command that was run
-				if (cmdString) {
-					const cmdStrDiv = document.createElement("div");
-					cmdStrDiv.className = "ml-2 sm:ml-4 text-sm sm:text-base mb-2";
-					cmdStrDiv.style.color = "var(--theme-commandText)";
-					cmdStrDiv.innerHTML = `<span style="color: var(--theme-promptUser)">user@localhost</span><span style="color: var(--theme-text)">:</span><span style="color: var(--theme-promptPath)">~</span><span style="color: var(--theme-promptSymbol)">$</span> ${cmdString}`;
-					outputDiv.appendChild(cmdStrDiv);
-				}
+			if (!commandOutput) return;
 
-				const innerDiv = document.createElement("div");
-				innerDiv.className = "ml-2 sm:ml-4 text-sm sm:text-base";
-				innerDiv.style.color = "var(--theme-outputText)";
-				
-				lines.forEach(line => {
-					const lineDiv = document.createElement("div");
-					lineDiv.className = "break-words";
-					lineDiv.style.color = defaultColor || "var(--theme-outputText)";
-					
-					const pre = document.createElement("pre");
-					pre.textContent = line;
-					lineDiv.appendChild(pre);
-					innerDiv.appendChild(lineDiv);
-				});
-				
-				outputDiv.appendChild(innerDiv);
-				commandOutput.appendChild(outputDiv);
-				
-				// Auto-scroll to bottom
-				const container = document.getElementById("terminal-container");
-				if (container) {
-					container.scrollTop = container.scrollHeight;
-				}
+			commandOutput.style.display = "block";
+
+			const outputDiv = document.createElement("div");
+			outputDiv.className = "space-y-1 mt-4";
+
+			if (cmdString) {
+				const cmdStrDiv = document.createElement("div");
+				cmdStrDiv.className = "ml-2 sm:ml-4 text-sm sm:text-base mb-2";
+				cmdStrDiv.style.color = "var(--theme-commandText)";
+				cmdStrDiv.innerHTML = `<span style="color:var(--theme-promptUser)">user@iamrey.dev</span><span style="color:var(--theme-text)">:</span><span style="color:var(--theme-promptPath)">~</span><span style="color:var(--theme-promptSymbol)">$</span> ${cmdString}`;
+				outputDiv.appendChild(cmdStrDiv);
 			}
+
+			const innerDiv = document.createElement("div");
+			innerDiv.className = "ml-2 sm:ml-4 text-sm sm:text-base";
+
+			lines.forEach(line => {
+				const lineDiv = document.createElement("div");
+				lineDiv.className = "break-words";
+				lineDiv.style.color = defaultColor || "var(--theme-outputText)";
+				const pre = document.createElement("pre");
+				pre.style.fontFamily = "inherit";
+				pre.style.whiteSpace = "pre-wrap";
+				pre.textContent = line;
+				lineDiv.appendChild(pre);
+				innerDiv.appendChild(lineDiv);
+			});
+
+			outputDiv.appendChild(innerDiv);
+			commandOutput.appendChild(outputDiv);
+
+			const container = document.getElementById("terminal-container");
+			if (container) container.scrollTop = container.scrollHeight;
 		}
 	}
 </script>

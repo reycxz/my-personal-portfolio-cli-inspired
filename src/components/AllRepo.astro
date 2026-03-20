@@ -9,12 +9,13 @@ const { allRepo } = Astro.props;
     <h2 class="text-lg font-semibold text-green-400 mb-4">
         <span class="text-gray-600">## </span>"All Projects and Repositories"
     </h2>
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div id="all-repo-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {
             allRepo.map((repo: GitHubRepo, index: number) => (
                 <div
                     id={`project-${index}`}
-                    class="bg-gray-800 border border-gray-600 rounded-lg p-4 hover:bg-gray-750 transition-colors"
+                    data-languages={(repo.primaryLanguages ?? []).join(',').toLowerCase()}
+                    class="repo-card bg-gray-800 border border-gray-600 rounded-lg p-4 hover:bg-gray-750 transition-colors"
                 >
                     <div class="flex justify-between items-start mb-3">
                         <h3 class="text-blue-400 font-semibold text-lg hover:text-blue-300">
