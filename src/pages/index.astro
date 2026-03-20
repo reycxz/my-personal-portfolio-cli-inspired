@@ -266,6 +266,8 @@ import { SITE_DESCRIPTION, SITE_TITLE, terminalConfig } from "../consts";
 	if (inputCapture) {
 		const commandHistory: string[] = [];
 		let historyIndex = -1;
+		let activeGame = null;
+		let gameState = null;
 
 		inputCapture.focus();
 		document.addEventListener("click", () => inputCapture.focus());
@@ -277,6 +279,191 @@ import { SITE_DESCRIPTION, SITE_TITLE, terminalConfig } from "../consts";
 				commandOutput.style.display = "none";
 			}
 			inputCapture!.value = "";
+		}
+
+		function exitGame(gameName) {
+			activeGame = null;
+			gameState = null;
+			renderOutput([`Exited ${gameName}.`, ""], "var(--theme-muted)", "exit");
+		}
+
+		function startNumberGuess(commandStr) {
+			activeGame = "numberguess";
+			gameState = {
+				target: Math.floor(Math.random() * 100) + 1,
+				attempts: 0,
+				maxAttempts: 7,
+			};
+			renderOutput([
+				"Number Guess started.",
+				"I'm thinking of a number from 1 to 100.",
+				"You have 7 attempts.",
+				"Type a number to guess or 'exit' to quit.",
+				"",
+			], "var(--theme-warning)", commandStr);
+		}
+
+		function startRps(commandStr) {
+			activeGame = "rps";
+			gameState = { wins: 0, losses: 0, draws: 0 };
+			renderOutput([
+				"Rock Paper Scissors started.",
+				"Type: rock, paper, or scissors.",
+				"Type 'exit' to quit.",
+				"",
+			], "var(--theme-accent)", commandStr);
+		}
+
+		function startWordle(commandStr) {
+			const words = ["react", "astro", "linux", "stack", "debug", "logic", "cisco", "shell"];
+			activeGame = "wordle";
+			gameState = {
+				secret: words[Math.floor(Math.random() * words.length)],
+				attempts: 0,
+				maxAttempts: 6,
+			};
+			renderOutput([
+				"Wordle started.",
+				"Guess the 5-letter word in 6 tries.",
+				"Feedback: [G] right spot, [Y] wrong spot, [_] absent.",
+				"Type a 5-letter guess or 'exit' to quit.",
+				"",
+			], "var(--theme-secondary)", commandStr);
+		}
+
+		function handleActiveGame(commandStr) {
+			const guess = commandStr.toLowerCase();
+
+			if (guess === "exit" || guess === "quit") {
+				exitGame(activeGame);
+				return true;
+			}
+
+			if (activeGame === "numberguess") {
+				const value = Number.parseInt(guess, 10);
+				if (Number.isNaN(value) || value < 1 || value > 100) {
+					renderOutput(["Enter a valid number between 1 and 100.", ""], "var(--theme-error)", commandStr);
+					return true;
+				}
+
+				gameState.attempts += 1;
+				if (value === gameState.target) {
+					renderOutput([
+						`Correct. You guessed it in ${gameState.attempts} attempt(s).`,
+						"Type 'numberguess' to play again.",
+						"",
+					], "var(--theme-success)", commandStr);
+					activeGame = null;
+					gameState = null;
+					return true;
+				}
+
+				if (gameState.attempts >= gameState.maxAttempts) {
+					renderOutput([
+						`Out of attempts. The number was ${gameState.target}.`,
+						"Type 'numberguess' to play again.",
+						"",
+					], "var(--theme-error)", commandStr);
+					activeGame = null;
+					gameState = null;
+					return true;
+				}
+
+				renderOutput([
+					value < gameState.target ? "Too low." : "Too high.",
+					`${gameState.maxAttempts - gameState.attempts} attempt(s) left.`,
+					"",
+				], "var(--theme-warning)", commandStr);
+				return true;
+			}
+
+			if (activeGame === "rps") {
+				const choices = ["rock", "paper", "scissors"];
+				if (!choices.includes(guess)) {
+					renderOutput(["Type rock, paper, or scissors.", ""], "var(--theme-error)", commandStr);
+					return true;
+				}
+
+				const cpu = choices[Math.floor(Math.random() * choices.length)];
+				if (guess === cpu) {
+					gameState.draws += 1;
+					renderOutput([
+						`You: ${guess}`,
+						`CPU: ${cpu}`,
+						"Draw.",
+						`Score W:${gameState.wins} L:${gameState.losses} D:${gameState.draws}`,
+						"",
+					], "var(--theme-info)", commandStr);
+					return true;
+				}
+
+				const win =
+					(guess === "rock" && cpu === "scissors") ||
+					(guess === "paper" && cpu === "rock") ||
+					(guess === "scissors" && cpu === "paper");
+
+				if (win) {
+					gameState.wins += 1;
+				} else {
+					gameState.losses += 1;
+				}
+
+				renderOutput([
+					`You: ${guess}`,
+					`CPU: ${cpu}`,
+					win ? "You win." : "CPU wins.",
+					`Score W:${gameState.wins} L:${gameState.losses} D:${gameState.draws}`,
+					"",
+				], win ? "var(--theme-success)" : "var(--theme-error)", commandStr);
+				return true;
+			}
+
+			if (activeGame === "wordle") {
+				if (guess.length !== 5) {
+					renderOutput(["Enter exactly 5 letters.", ""], "var(--theme-error)", commandStr);
+					return true;
+				}
+
+				gameState.attempts += 1;
+				const feedback = guess.split("").map((char, index) => {
+					if (gameState.secret[index] === char) return `[G] ${char}`;
+					if (gameState.secret.includes(char)) return `[Y] ${char}`;
+					return `[_] ${char}`;
+				});
+
+				if (guess === gameState.secret) {
+					renderOutput([
+						feedback.join(" "),
+						`Solved in ${gameState.attempts} attempt(s).`,
+						"Type 'wordle' to play again.",
+						"",
+					], "var(--theme-success)", commandStr);
+					activeGame = null;
+					gameState = null;
+					return true;
+				}
+
+				if (gameState.attempts >= gameState.maxAttempts) {
+					renderOutput([
+						feedback.join(" "),
+						`No attempts left. The word was '${gameState.secret}'.`,
+						"Type 'wordle' to play again.",
+						"",
+					], "var(--theme-error)", commandStr);
+					activeGame = null;
+					gameState = null;
+					return true;
+				}
+
+				renderOutput([
+					feedback.join(" "),
+					`${gameState.maxAttempts - gameState.attempts} attempt(s) left.`,
+					"",
+				], "var(--theme-secondary)", commandStr);
+				return true;
+			}
+
+			return false;
 		}
 
 		inputCapture.addEventListener("keydown", (e) => {
@@ -292,6 +479,10 @@ import { SITE_DESCRIPTION, SITE_TITLE, terminalConfig } from "../consts";
 				historyIndex = commandHistory.length;
 
 				const command = commandStr.toLowerCase();
+				if (activeGame && handleActiveGame(commandStr)) {
+					inputCapture.value = "";
+					return;
+				}
 
 				// ── Navigation ────────────────────────────────────────────
 				if (command === "cd projects" || command === "cd project") {
@@ -299,6 +490,9 @@ import { SITE_DESCRIPTION, SITE_TITLE, terminalConfig } from "../consts";
 
 				} else if (command === "cd blogs" || command === "cd blog") {
 					window.location.href = "/blogs";
+
+				} else if (command === "resume" || command === "cv" || command === "open resume") {
+					window.location.href = "/resume";
 
 				} else if (command === "cd profile" || command === "cd ~" || command === "cd~" || command === "cd home" || command === "cd") {
 					renderOutput([
@@ -369,6 +563,8 @@ import { SITE_DESCRIPTION, SITE_TITLE, terminalConfig } from "../consts";
 						"    Projects     : 4+",
 						"    GitHub Repos : 12",
 						"    Streak       : 29 days",
+						"",
+						"  Tip        : type 'open resume' to view printable CV page.",
 						""
 					], "var(--theme-outputText)", commandStr);
 
@@ -439,6 +635,26 @@ import { SITE_DESCRIPTION, SITE_TITLE, terminalConfig } from "../consts";
 						);
 					}
 
+				} else if (command === "games") {
+					renderOutput([
+						"Available terminal games:",
+						"  numberguess  - Guess a number from 1 to 100 in 7 tries",
+						"  rps          - Rock, Paper, Scissors against CPU",
+						"  wordle       - Guess the 5-letter word in 6 tries",
+						"",
+						"During a game, type 'exit' to quit back to the terminal.",
+						"",
+					], "var(--theme-warning)", commandStr);
+
+				} else if (command === "numberguess") {
+					startNumberGuess(commandStr);
+
+				} else if (command === "rps") {
+					startRps(commandStr);
+
+				} else if (command === "wordle") {
+					startWordle(commandStr);
+
 				} else if (command === "help" || command === "h") {
 					renderOutput([
 						"  Available commands:",
@@ -452,6 +668,7 @@ import { SITE_DESCRIPTION, SITE_TITLE, terminalConfig } from "../consts";
 						"   whoami           — Quick identity summary",
 						"   cd profile       — Detailed profile card",
 						"   cat resume.txt   — View resume",
+						"   resume / cv      — Open printable resume page",
 						"   skills           — List skills & technologies",
 						"   neofetch         — System / profile info",
 						"",
@@ -463,6 +680,10 @@ import { SITE_DESCRIPTION, SITE_TITLE, terminalConfig } from "../consts";
 						"",
 						"  Misc:",
 						"   history          — Show command history",
+						"   games            — List available terminal games",
+						"   numberguess      — Start number guessing game",
+						"   rps              — Start rock paper scissors",
+						"   wordle           — Start 5-letter word game",
 						"   joke             — Random dev joke",
 						"   clear / cls      — Clear terminal",
 						"   help / h         — Show this message",
@@ -476,7 +697,9 @@ import { SITE_DESCRIPTION, SITE_TITLE, terminalConfig } from "../consts";
 				} else if (command === "ls" || command === "ll") {
 					renderOutput([
 						"drwxr-xr-x  user  blogs/",
+						"drwxr-xr-x  user  games/",
 						"drwxr-xr-x  user  projects/",
+						"-rw-r--r--  user  resume.cv",
 						"-rw-r--r--  user  profile",
 						"-rw-r--r--  user  resume.txt",
 						""
@@ -544,8 +767,9 @@ import { SITE_DESCRIPTION, SITE_TITLE, terminalConfig } from "../consts";
 				const current = inputCapture.value.toLowerCase();
 				const commands = [
 					"help", "whoami", "contact", "neofetch", "skills", "joke", "history",
-					"clear", "cat resume.txt", "cd projects", "cd blogs", "cd profile", "cd ~",
-					"ls", "ll", "open github", "open linkedin", "open messenger"
+					"clear", "cat resume.txt", "resume", "cv", "open resume", "games",
+					"numberguess", "rps", "wordle", "cd projects", "cd blogs", "cd profile", "cd ~",
+					"ls", "ll", "open github", "open linkedin", "open messenger", "exit"
 				];
 				const match = commands.find(cmd => cmd.startsWith(current));
 				if (match) inputCapture.value = match;

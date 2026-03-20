@@ -317,7 +317,7 @@ export const profileConfig: ProfileConfig = {
       "cat", "man", "history", "date", "uptime", "uname", "parrot", "sl",
       "hire-me", "coffee", "joke"
     ],
-    prompt: "hrithik@iamdhakrey.dev:~$"
+    prompt: "reycxz@iamrey.dev:~$"
   },
 
   systemInfo: {
@@ -379,6 +379,7 @@ export const profileConfig: ProfileConfig = {
     brandName: "iamrey.dev",
     brandUrl: "/",
     links: [
+      { name: "resume", path: "/resume", color: "var(--theme-accent)" },
       { name: "blogs", path: "/blogs", color: "var(--theme-primary)" },
       { name: "projects", path: "/projects", color: "var(--theme-secondary)" },
       // { name: "profile", path: "/profile", color: "var(--theme-accent)" },
