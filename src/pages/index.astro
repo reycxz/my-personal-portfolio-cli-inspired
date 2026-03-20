@@ -265,7 +265,7 @@ import { resumePdfPath, terminalResumeLines } from "../data/resume";
 	// ── Terminal input logic ───────────────────────────────────────────────
 	const inputCapture = document.querySelector("input");
 	if (inputCapture) {
-		const commandHistory: string[] = [];
+		const commandHistory = [];
 		let historyIndex = -1;
 		let activeGame = null;
 		let gameState = null;
@@ -279,7 +279,7 @@ import { resumePdfPath, terminalResumeLines } from "../data/resume";
 				commandOutput.innerHTML = "";
 				commandOutput.style.display = "none";
 			}
-			inputCapture!.value = "";
+			inputCapture.value = "";
 		}
 
 		function exitGame(gameName) {
@@ -707,11 +707,11 @@ import { resumePdfPath, terminalResumeLines } from "../data/resume";
 						"I'd tell you a joke about DNS, but it might take 24-48 hours to propagate.",
 						"Two hard things in CS: cache invalidation, naming things, and off-by-one errors."
 					];
-					let jokeIndex: number;
+					let jokeIndex;
 					do {
 						jokeIndex = Math.floor(Math.random() * jokes.length);
-					} while (jokeIndex === (window as any).lastJokeIndex);
-					(window as any).lastJokeIndex = jokeIndex;
+					} while (jokeIndex === window.lastJokeIndex);
+					window.lastJokeIndex = jokeIndex;
 					renderOutput([jokes[jokeIndex], ""], "var(--theme-accent)", commandStr);
 
 				} else {
@@ -752,7 +752,7 @@ import { resumePdfPath, terminalResumeLines } from "../data/resume";
 			}
 		});
 
-		function renderOutput(lines: string[], defaultColor: string, cmdString: string) {
+		function renderOutput(lines, defaultColor, cmdString) {
 			const commandOutput = document.getElementById("command-output");
 			if (!commandOutput) return;
 
