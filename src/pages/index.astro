@@ -4,6 +4,7 @@ import CommandOutput from "../components/CommandOutput.astro";
 import Footer from "../components/Footer.astro";
 import Header from "../components/Header.astro";
 import { SITE_DESCRIPTION, SITE_TITLE, terminalConfig } from "../consts";
+import { terminalResumeLines } from "../data/resume";
 ---
 
 <!doctype html>
@@ -240,7 +241,7 @@ import { SITE_DESCRIPTION, SITE_TITLE, terminalConfig } from "../consts";
 		caret-color: #22c55e;
 	}
 </style>
-<script>
+<script define:vars={{ terminalResumeLines }}>
 	// ── Typing animation on welcome title ──────────────────────────────────
 	const welcomeTitle = document.getElementById("welcome-title");
 	if (welcomeTitle) {
@@ -536,37 +537,7 @@ import { SITE_DESCRIPTION, SITE_TITLE, terminalConfig } from "../consts";
 					], "var(--theme-primary)", commandStr);
 
 				} else if (command === "cat resume.txt") {
-					renderOutput([
-						"┌──────────────────────────────────────────────────┐",
-						"│                  📄  RESUME                       │",
-						"└──────────────────────────────────────────────────┘",
-						"",
-						"  Rey Lorenz Cabanog",
-						"  Full Stack Developer & Cyber Security Enthusiast",
-						"",
-						"  🎓 EDUCATION",
-						"    TIP Manila — BS Computer Engineering (Class of 2027)",
-						"",
-						"  🛠️  SKILLS",
-						"    Languages : PHP, JavaScript, TypeScript, Python, C++, SQL",
-						"    Frameworks: Laravel, React.js, Astro, Tailwind CSS",
-						"    Tools     : Git, Docker, Linux, Cisco Networking",
-						"    Security  : DFIR, SOC Operations, Network Security",
-						"",
-						"  🔭 CURRENT FOCUS",
-						"    • Multi-agency booking platform using Laravel",
-						"    • SOC Operations & Digital Forensics (DFIR)",
-						"    • Contributing to open source projects",
-						"    • CE Degree @ TIP Manila",
-						"",
-						"  📊 STATS",
-						"    Projects     : 4+",
-						"    GitHub Repos : 12",
-						"    Streak       : 29 days",
-						"",
-						"  Tip        : type 'open resume' to view printable CV page.",
-						""
-					], "var(--theme-outputText)", commandStr);
+					renderOutput(terminalResumeLines, "var(--theme-outputText)", commandStr);
 
 				} else if (command === "neofetch") {
 					renderOutput([
@@ -623,6 +594,10 @@ import { SITE_DESCRIPTION, SITE_TITLE, terminalConfig } from "../consts";
 					window.open("https://m.me/ReylorenzCabanog", "_blank", "noopener,noreferrer");
 					renderOutput(["  ↗ Opening Messenger in a new tab...", ""], "var(--theme-primary)", commandStr);
 
+				} else if (command === "download resume") {
+					window.open("/CABANOG_REYLORENZ_RESUME-updated.pdf", "_blank", "noopener,noreferrer");
+					renderOutput(["  ↗ Opening resume PDF in a new tab...", ""], "var(--theme-primary)", commandStr);
+
 				// ── Misc ──────────────────────────────────────────────────
 				} else if (command === "history") {
 					const hist = commandHistory.slice(0, -1);
@@ -677,6 +652,7 @@ import { SITE_DESCRIPTION, SITE_TITLE, terminalConfig } from "../consts";
 						"   open github      — Open GitHub in new tab",
 						"   open linkedin    — Open LinkedIn in new tab",
 						"   open messenger   — Open Messenger in new tab",
+						"   download resume  — Open original resume PDF",
 						"",
 						"  Misc:",
 						"   history          — Show command history",
@@ -769,7 +745,7 @@ import { SITE_DESCRIPTION, SITE_TITLE, terminalConfig } from "../consts";
 					"help", "whoami", "contact", "neofetch", "skills", "joke", "history",
 					"clear", "cat resume.txt", "resume", "cv", "open resume", "games",
 					"numberguess", "rps", "wordle", "cd projects", "cd blogs", "cd profile", "cd ~",
-					"ls", "ll", "open github", "open linkedin", "open messenger", "exit"
+					"ls", "ll", "open github", "open linkedin", "open messenger", "download resume", "exit"
 				];
 				const match = commands.find(cmd => cmd.startsWith(current));
 				if (match) inputCapture.value = match;

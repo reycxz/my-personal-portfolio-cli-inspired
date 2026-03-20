@@ -3,10 +3,7 @@ import BaseHead from "../components/BaseHead.astro";
 import Footer from "../components/Footer.astro";
 import Header from "../components/Header.astro";
 import { SITE_DESCRIPTION, SITE_TITLE } from "../consts";
-import profileConfig from "../../profile.config";
-import githubData from "../data/github-projects.json" assert { type: "json" };
-
-const { profile, socialLinks, skills, achievements, stats } = profileConfig;
+import { resumeData } from "../data/resume";
 ---
 
 <!doctype html>
@@ -28,11 +25,12 @@ const { profile, socialLinks, skills, achievements, stats } = profileConfig;
 					<div class="px-4 sm:px-6 py-4 border-b flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3" style={{ borderColor: "var(--theme-border)", backgroundColor: "var(--theme-welcomeBoxBg)" }}>
 						<div>
 							<p class="text-xs uppercase tracking-[0.2em]" style={{ color: "var(--theme-muted)" }}>Resume / CV</p>
-							<h1 class="text-2xl sm:text-3xl font-bold" style={{ color: "var(--theme-primary)" }}>{profile.name}</h1>
-							<p class="text-sm sm:text-base mt-1" style={{ color: "var(--theme-outputText)" }}>{profile.title}</p>
+							<h1 class="text-2xl sm:text-3xl font-bold" style={{ color: "var(--theme-primary)" }}>{resumeData.basics.name}</h1>
+							<p class="text-sm sm:text-base mt-1" style={{ color: "var(--theme-outputText)" }}>{resumeData.basics.title}</p>
 						</div>
 						<div class="flex flex-wrap gap-2">
 							<a href="/" class="px-3 py-2 rounded border text-sm hover:opacity-80" style={{ borderColor: "var(--theme-border)", color: "var(--theme-outputText)" }}>Back to terminal</a>
+							<a href="/CABANOG_REYLORENZ_RESUME-updated.pdf" target="_blank" rel="noopener noreferrer" class="px-3 py-2 rounded border text-sm hover:opacity-80" style={{ borderColor: "var(--theme-border)", color: "var(--theme-outputText)" }}>Download PDF</a>
 							<button id="print-resume" class="px-3 py-2 rounded text-sm font-semibold" style={{ backgroundColor: "var(--theme-accent)", color: "var(--theme-background)" }}>Print / Save PDF</button>
 						</div>
 					</div>
@@ -40,65 +38,104 @@ const { profile, socialLinks, skills, achievements, stats } = profileConfig;
 					<div class="p-4 sm:p-6 space-y-8" style={{ backgroundColor: "var(--theme-background)" }}>
 						<section class="grid grid-cols-1 lg:grid-cols-[2fr_1fr] gap-6">
 							<div>
-								<h2 class="text-lg font-bold mb-3" style={{ color: "var(--theme-info)" }}>Profile</h2>
-								<p class="leading-7" style={{ color: "var(--theme-outputText)" }}>{profile.bio}</p>
+								<h2 class="text-lg font-bold mb-3" style={{ color: "var(--theme-info)" }}>Summary</h2>
+								<div class="space-y-2" style={{ color: "var(--theme-outputText)" }}>
+									{resumeData.summary.map((line) => <p class="leading-7">{line}</p>)}
+								</div>
 								<div class="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
 									<div>
 										<p style={{ color: "var(--theme-muted)" }}>Location</p>
-										<p>{profile.location}</p>
+										<p>{resumeData.basics.location}</p>
 									</div>
 									<div>
-										<p style={{ color: "var(--theme-muted)" }}>Email</p>
-										<p>{profile.email}</p>
+										<p style={{ color: "var(--theme-muted)" }}>Phone / Email</p>
+										<p>{resumeData.basics.phone}</p>
+										<p>{resumeData.basics.email}</p>
 									</div>
 									<div>
 										<p style={{ color: "var(--theme-muted)" }}>GitHub</p>
-										<a href={socialLinks.github} target="_blank" rel="noopener noreferrer" class="hover:underline" style={{ color: "var(--theme-primary)" }}>{socialLinks.github}</a>
+										<a href={resumeData.basics.github} target="_blank" rel="noopener noreferrer" class="hover:underline" style={{ color: "var(--theme-primary)" }}>{resumeData.basics.github}</a>
 									</div>
 									<div>
 										<p style={{ color: "var(--theme-muted)" }}>LinkedIn</p>
-										<a href={socialLinks.website} target="_blank" rel="noopener noreferrer" class="hover:underline" style={{ color: "var(--theme-primary)" }}>{socialLinks.website}</a>
+										<a href={resumeData.basics.linkedin} target="_blank" rel="noopener noreferrer" class="hover:underline" style={{ color: "var(--theme-primary)" }}>{resumeData.basics.linkedin}</a>
 									</div>
 								</div>
 							</div>
 							<div class="rounded-lg border p-4" style={{ borderColor: "var(--theme-border)", backgroundColor: "var(--theme-welcomeBoxBg)" }}>
-								<h2 class="text-lg font-bold mb-3" style={{ color: "var(--theme-warning)" }}>Snapshot</h2>
+								<h2 class="text-lg font-bold mb-3" style={{ color: "var(--theme-warning)" }}>Highlights</h2>
 								<ul class="space-y-2 text-sm" style={{ color: "var(--theme-outputText)" }}>
-									<li>Projects: {stats.projects}</li>
-									<li>GitHub Repos: {githubData.stats.totalRepos}</li>
-									<li>Total Stars: {githubData.stats.totalStars}</li>
-									<li>Contribution Streak: {stats.streak}</li>
+									<li>Working student</li>
+									<li>Cybersecurity-focused Computer Engineering student</li>
+									<li>Cisco certifications in networking and security</li>
+									<li>Experience in dispatch, ticketing, chat, and voice support</li>
 								</ul>
 							</div>
 						</section>
 
 						<section>
-							<h2 class="text-lg font-bold mb-3" style={{ color: "var(--theme-info)" }}>Current Focus</h2>
-							<ul class="grid grid-cols-1 md:grid-cols-2 gap-3">
-								{profile.currentFocus.map((item) => (
-									<li class="rounded border px-4 py-3" style={{ borderColor: "var(--theme-border)", backgroundColor: "var(--theme-welcomeBoxBg)", color: "var(--theme-outputText)" }}>{item}</li>
-								))}
-							</ul>
-						</section>
-
-						<section>
-							<h2 class="text-lg font-bold mb-3" style={{ color: "var(--theme-info)" }}>Skills</h2>
-							<div class="flex flex-wrap gap-2">
-								{skills.map((skill) => (
-									<span class="px-3 py-2 rounded border text-sm" style={{ borderColor: "var(--theme-border)", backgroundColor: "var(--theme-welcomeBoxBg)", color: "var(--theme-outputText)" }}>{skill}</span>
+							<h2 class="text-lg font-bold mb-3" style={{ color: "var(--theme-info)" }}>Work Experience</h2>
+							<div class="space-y-4">
+								{resumeData.workExperience.map((job) => (
+									<div class="rounded border px-4 py-4" style={{ borderColor: "var(--theme-border)", backgroundColor: "var(--theme-welcomeBoxBg)" }}>
+										<div class="flex flex-col md:flex-row md:items-start md:justify-between gap-2">
+											<div>
+												<p class="font-semibold" style={{ color: "var(--theme-primary)" }}>{job.title}</p>
+												<p class="text-sm" style={{ color: "var(--theme-outputText)" }}>{job.company} • {job.location}</p>
+											</div>
+											<p class="text-sm" style={{ color: "var(--theme-muted)" }}>{job.period}</p>
+										</div>
+										<ul class="mt-3 space-y-2 text-sm" style={{ color: "var(--theme-outputText)" }}>
+											{job.bullets.map((bullet) => <li>• {bullet}</li>)}
+										</ul>
+									</div>
 								))}
 							</div>
 						</section>
 
 						<section>
-							<h2 class="text-lg font-bold mb-3" style={{ color: "var(--theme-info)" }}>Highlights</h2>
-							<div class="space-y-3">
-								{achievements.map((achievement) => (
-									<div class="rounded border px-4 py-3" style={{ borderColor: "var(--theme-border)", backgroundColor: "var(--theme-welcomeBoxBg)" }}>
-										<p class="font-semibold" style={{ color: "var(--theme-primary)" }}>{achievement.title}</p>
-										<p class="text-sm mt-1" style={{ color: "var(--theme-outputText)" }}>{achievement.description}</p>
+							<h2 class="text-lg font-bold mb-3" style={{ color: "var(--theme-info)" }}>Education</h2>
+							<div class="space-y-4">
+								{resumeData.education.map((entry) => (
+									<div class="rounded border px-4 py-4" style={{ borderColor: "var(--theme-border)", backgroundColor: "var(--theme-welcomeBoxBg)" }}>
+										<div class="flex flex-col md:flex-row md:items-start md:justify-between gap-2">
+											<div>
+												<p class="font-semibold" style={{ color: "var(--theme-primary)" }}>{entry.degree}</p>
+												<p class="text-sm" style={{ color: "var(--theme-outputText)" }}>{entry.school}</p>
+											</div>
+											<p class="text-sm" style={{ color: "var(--theme-muted)" }}>{entry.period}</p>
+										</div>
+										{entry.bullets.length > 0 && (
+											<ul class="mt-3 space-y-2 text-sm" style={{ color: "var(--theme-outputText)" }}>
+												{entry.bullets.map((bullet) => <li>• {bullet}</li>)}
+											</ul>
+										)}
 									</div>
 								))}
+							</div>
+						</section>
+
+						<section class="grid grid-cols-1 xl:grid-cols-2 gap-6">
+							<div>
+								<h2 class="text-lg font-bold mb-3" style={{ color: "var(--theme-info)" }}>Certifications</h2>
+								<div class="space-y-3">
+									{resumeData.certifications.map((cert) => (
+										<div class="rounded border px-4 py-3 text-sm" style={{ borderColor: "var(--theme-border)", backgroundColor: "var(--theme-welcomeBoxBg)", color: "var(--theme-outputText)" }}>{cert}</div>
+									))}
+								</div>
+							</div>
+
+							<div>
+								<h2 class="text-lg font-bold mb-3" style={{ color: "var(--theme-info)" }}>Technical Skills</h2>
+								<div class="space-y-3">
+									{resumeData.skillGroups.map((group) => (
+										<div class="rounded border px-4 py-3" style={{ borderColor: "var(--theme-border)", backgroundColor: "var(--theme-welcomeBoxBg)" }}>
+											<p class="font-semibold" style={{ color: "var(--theme-primary)" }}>{group.name}</p>
+											<p class="text-sm mt-2" style={{ color: "var(--theme-outputText)" }}>{group.items.join(", ")}</p>
+										</div>
+									))}
+								</div>
+							</div>
 							</div>
 						</section>
 					</div>
