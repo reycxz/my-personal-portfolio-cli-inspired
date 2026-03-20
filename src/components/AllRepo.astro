@@ -1,5 +1,5 @@
 ---
-import { GitHubRepo } from "../types";
+import type { ProjectItem } from "../types";
 import { getLanguageColor } from "../utils/theme";
 
 const { allRepo } = Astro.props;
@@ -11,7 +11,7 @@ const { allRepo } = Astro.props;
     </h2>
     <div id="all-repo-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {
-            allRepo.map((repo: GitHubRepo, index: number) => (
+            allRepo.map((repo: ProjectItem, index: number) => (
                 <div
                     id={`project-${index}`}
                     data-languages={(repo.primaryLanguages ?? []).join(',').toLowerCase()}
@@ -19,16 +19,25 @@ const { allRepo } = Astro.props;
                 >
                     <div class="flex justify-between items-start mb-3">
                         <h3 class="text-blue-400 font-semibold text-lg hover:text-blue-300">
-                            <a
-                                href={repo.html_url}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                class="hover:underline"
-                            >
-                                {repo.name}
-                            </a>
+                            {
+                                repo.html_url ? (
+                                    <a
+                                        href={repo.html_url}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        class="hover:underline"
+                                    >
+                                        {repo.name}
+                                    </a>
+                                ) : (
+                                    <span>{repo.name}</span>
+                                )
+                            }
                         </h3>
-                        <div class="flex items-center space-x-2 text-sm">
+                        <div class="flex items-center space-x-2 text-sm flex-wrap justify-end">
+                            <span class="text-[10px] uppercase tracking-wide px-2 py-1 rounded border border-gray-600 text-gray-400">
+                                {repo.sourceLabel || repo.source}
+                            </span>
                             {repo.stargazers_count > 0 && (
                                 <span class="text-yellow-400">
                                     ⭐ {repo.stargazers_count}
@@ -91,9 +100,21 @@ const { allRepo } = Astro.props;
                                 )
                             )}
                         </div>
-                        <span class="text-gray-500 text-xs">
-                            {repo.updated_at}
-                        </span>
+                        <div class="flex items-center gap-3 text-xs">
+                            {repo.homepage && (
+                                <a
+                                    href={repo.homepage}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    class="text-green-400 hover:underline"
+                                >
+                                    live
+                                </a>
+                            )}
+                            <span class="text-gray-500">
+                                {repo.updated_at}
+                            </span>
+                        </div>
                     </div>
                 </div>
             ))

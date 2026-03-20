@@ -22,6 +22,19 @@ export interface GitHubRepo {
     } | null;
 }
 
+export interface ProjectItem {
+    name: string;
+    description: string | null;
+    html_url?: string | null;
+    homepage?: string | null;
+    primaryLanguages?: string[];
+    stargazers_count: number;
+    forks_count: number;
+    updated_at: string;
+    source: 'github' | 'personal';
+    sourceLabel?: string;
+}
+
 export default interface GitHubData {
     lastUpdated: string;
     user: {

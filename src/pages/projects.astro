@@ -5,9 +5,51 @@ import Footer from "../components/Footer.astro";
 import Header from "../components/Header.astro";
 import { SITE_DESCRIPTION, SITE_TITLE } from "../consts";
 import githubData from "../data/github-projects.json" assert { type: "json" };
+import profileConfig from "../../profile.config";
 import FeatureRepo from "../components/FeatureRepo.astro";
 import ProjectsUpdateDate from "../components/ProjectsUpdateDate.astro";
 import AllRepo from "../components/AllRepo.astro";
+import type { ProjectItem } from "../types";
+
+function normalizeGitHubProject(repo: any): ProjectItem {
+    return {
+        name: repo.name,
+        description: repo.description ?? null,
+        html_url: repo.html_url ?? repo.url ?? null,
+        homepage: repo.homepage ?? repo.homepageUrl ?? null,
+        primaryLanguages: repo.primaryLanguages ?? (repo.primaryLanguage?.name ? [repo.primaryLanguage.name] : []),
+        stargazers_count: repo.stargazers_count ?? repo.stargazerCount ?? 0,
+        forks_count: repo.forks_count ?? repo.forkCount ?? 0,
+        updated_at: repo.updated_at ?? repo.updatedAt ?? repo.pushed_at ?? repo.pushedAt ?? repo.createdAt ?? "",
+        source: "github",
+        sourceLabel: "GitHub",
+    };
+}
+
+function normalizePersonalProject(project: (typeof profileConfig.projects.personalProjects)[number]): ProjectItem {
+    return {
+        name: project.name,
+        description: project.description,
+        html_url: project.url ?? null,
+        homepage: project.liveUrl ?? null,
+        primaryLanguages: project.primaryLanguages,
+        stargazers_count: 0,
+        forks_count: 0,
+        updated_at: project.updatedAt,
+        source: "personal",
+        sourceLabel: "Personal",
+    };
+}
+
+const githubProjects = (githubData.repositories ?? []).map(normalizeGitHubProject);
+const featuredGitHubProjects = (githubData.featured ?? []).map(normalizeGitHubProject);
+const personalProjects = (profileConfig.projects.personalProjects ?? []).map(normalizePersonalProject);
+const featuredPersonalProjects = (profileConfig.projects.personalProjects ?? [])
+    .filter((project) => project.featured)
+    .map(normalizePersonalProject);
+const featuredProjects = [...featuredPersonalProjects, ...featuredGitHubProjects];
+const allProjects = [...personalProjects, ...githubProjects];
+const allLanguages = [...new Set(allProjects.flatMap((project) => project.primaryLanguages ?? []))].sort((a, b) => a.localeCompare(b));
 ---
 
 <!doctype html>
@@ -100,17 +142,11 @@ import AllRepo from "../components/AllRepo.astro";
                         <div class="mb-6 border-b border-gray-800 pb-4">
                             <div class="text-gray-500 text-sm mb-2">
                                 <span class="text-blue-400">$ </span>
-                                <span
-                                    >gh repo list @{githubData.user.login} --json
-                                    name,description,language,stars</span
-                                >
+                                <span>portfolio projects --source github,personal --format table</span>
                             </div>
                             <div class="text-gray-500 text-sm mb-2">
                                 <span class="text-blue-400">$ </span>
-                                <span
-                                    >gh api user/repos | jq '.[] | .language' |
-                                    sort | uniq</span
-                                >
+                                <span>projectctl languages --all | sort | uniq</span>
                                 <span class="text-gray-600 ml-2"
                                     ># Show all languages</span
                                 >
@@ -118,24 +154,15 @@ import AllRepo from "../components/AllRepo.astro";
                             <h1
                                 class="text-2xl sm:text-3xl font-bold mb-4 text-green-400"
                             >
-                                <span class="text-gray-600"># </span>GitHub
-                                Projects
+                                <span class="text-gray-600"># </span>Projects
                             </h1>
                             <div
                                 class="flex flex-wrap items-center gap-4 text-sm"
                             >
-                                <span class="text-blue-400"
-                                    >👤 @{githubData.user.login}</span
-                                >
-                                <span class="text-yellow-400"
-                                    >📁 {githubData.stats.totalRepos} repos</span
-                                >
-                                <span class="text-purple-400"
-                                    >⭐ {githubData.stats.totalStars} stars</span
-                                >
-                                <span class="text-green-400"
-                                    >🍴 {githubData.stats.totalForks} forks</span
-                                >
+                                <span class="text-blue-400">👤 @{githubData.user.login}</span>
+                                <span class="text-yellow-400">📁 {allProjects.length} total projects</span>
+                                <span class="text-purple-400">🐙 {githubProjects.length} GitHub repos</span>
+                                <span class="text-green-400">🧩 {personalProjects.length} personal projects</span>
                             </div>
                         </div>
 
@@ -145,35 +172,35 @@ import AllRepo from "../components/AllRepo.astro";
                                 class="bg-gray-800 border border-gray-600 rounded-lg p-4 text-center"
                             >
                                 <div class="text-blue-400 text-2xl font-bold">
-                                    {githubData.stats.totalRepos}
+                                    {allProjects.length}
                                 </div>
-                                <div class="text-gray-400 text-sm">Repos</div>
+                                <div class="text-gray-400 text-sm">Projects</div>
                             </div>
                             <div
                                 class="bg-gray-800 border border-gray-600 rounded-lg p-4 text-center"
                             >
                                 <div class="text-yellow-400 text-2xl font-bold">
-                                    {githubData.stats.totalStars}
+                                    {githubProjects.length}
                                 </div>
                                 <div class="text-gray-400 text-sm">
-                                    Total Stars
+                                    GitHub Repos
                                 </div>
                             </div>
                             <div
                                 class="bg-gray-800 border border-gray-600 rounded-lg p-4 text-center"
                             >
                                 <div class="text-purple-400 text-2xl font-bold">
-                                    {githubData.stats.totalForks}
+                                    {personalProjects.length}
                                 </div>
                                 <div class="text-gray-400 text-sm">
-                                    Total Forks
+                                    Personal Projects
                                 </div>
                             </div>
                             <div
                                 class="bg-gray-800 border border-gray-600 rounded-lg p-4 text-center"
                             >
                                 <div class="text-green-400 text-2xl font-bold">
-                                    {githubData.stats.languages.length}
+                                    {allLanguages.length}
                                 </div>
                                 <div class="text-gray-400 text-sm">
                                     Languages
@@ -201,7 +228,7 @@ import AllRepo from "../components/AllRepo.astro";
                                         <span class="text-gray-200 text-sm font-semibold">All</span>
                                     </button>
                                     {
-                                        githubData.stats.allLanguages.map(
+                                        allLanguages.map(
                                             (language) => (
                                                 <button
                                                     data-lang={language.toLowerCase()}
@@ -225,14 +252,12 @@ import AllRepo from "../components/AllRepo.astro";
                                     }
                                 </div>
                                 <div class="mt-3 text-gray-400 text-xs">
-                                    Total: {
-                                        githubData.stats.allLanguages.length
-                                    } languages across all repositories
+                                    Total: {allLanguages.length} languages across GitHub and personal projects
                                 </div>
                             </div>
                         </div>
-                        <FeatureRepo featuredRepo={githubData.featured} />
-                        <AllRepo allRepo={githubData.repositories} />
+                        <FeatureRepo featuredRepo={featuredProjects} />
+                        <AllRepo allRepo={allProjects} />
                     </div>
                     <ProjectsUpdateDate lastUpdated={githubData.lastUpdated} />
                 </div>
@@ -245,14 +270,14 @@ import AllRepo from "../components/AllRepo.astro";
 <script>
     // ── Language filter ────────────────────────────────────────────────────
     const filterBar = document.getElementById("lang-filter-bar");
-    const repoCards = document.querySelectorAll<HTMLElement>(".repo-card");
+    const repoCards = document.querySelectorAll(".repo-card");
     let activeFilter = "all";
 
-    function applyFilter(lang: string) {
+    function applyFilter(lang) {
         activeFilter = lang;
 
         // Update button styles
-        document.querySelectorAll<HTMLElement>(".lang-filter-btn").forEach(btn => {
+        document.querySelectorAll(".lang-filter-btn").forEach(btn => {
             const isActive = btn.dataset.lang === lang;
             btn.style.backgroundColor = isActive ? "rgb(22 101 52)" : "";
             btn.style.borderColor = isActive ? "rgb(34 197 94)" : "";
@@ -285,7 +310,7 @@ import AllRepo from "../components/AllRepo.astro";
     }
 
     filterBar?.addEventListener("click", (e) => {
-        const btn = (e.target as Element).closest<HTMLElement>(".lang-filter-btn");
+        const btn = e.target.closest(".lang-filter-btn");
         if (btn?.dataset.lang) applyFilter(btn.dataset.lang);
     });
 
@@ -294,24 +319,26 @@ import AllRepo from "../components/AllRepo.astro";
     if (input) {
         input.focus();
         document.addEventListener("click", (e) => {
-            if ((e.target as Element).closest('.min-h-screen.font-mono')) {
-                (input as HTMLInputElement).focus();
+            if (e.target.closest('.min-h-screen.font-mono')) {
+                input.focus();
             }
         });
 
-        input.addEventListener("keydown", (e: KeyboardEvent) => {
+        input.addEventListener("keydown", (e) => {
             if (e.key === "Enter") {
-                const commandStr = (input as HTMLInputElement).value.trim();
+                const commandStr = input.value.trim();
                 const command = commandStr.toLowerCase();
 
                 if (command === "cd ~" || command === "cd" || command === "cd profile" || command === "cd home") {
                     window.location.href = "/";
-                } else if (command === "cd blogs" || command === "cd blog") {
+                } else if (command === "cd blogs" || command === "cd blog" || command === "blogs") {
                     window.location.href = "/blogs";
+                } else if (command === "resume" || command === "cv" || command === "cd resume") {
+                    window.location.href = "/resume";
                 } else if (command === "clear" || command === "cls") {
-                    (input as HTMLInputElement).value = "";
+                    input.value = "";
                 } else {
-                    (input as HTMLInputElement).value = "";
+                    input.value = "";
                 }
             }
         });

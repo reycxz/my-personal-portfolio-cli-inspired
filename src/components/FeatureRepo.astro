@@ -1,5 +1,5 @@
 ---
-import { GitHubRepo } from "../types";
+import type { ProjectItem } from "../types";
 import { getLanguageColor } from "../utils/theme";
 
 const { featuredRepo } = Astro.props;
@@ -11,23 +11,32 @@ const { featuredRepo } = Astro.props;
     </h2>
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {
-            featuredRepo.map((repo: GitHubRepo, index: number) => (
+            featuredRepo.map((repo: ProjectItem, index: number) => (
                 <div
                     id={`project-${index}`}
                     class="bg-gray-800 border border-gray-600 rounded-lg p-4 hover:bg-gray-750 transition-colors"
                 >
                     <div class="flex justify-between items-start mb-3">
                         <h3 class="text-blue-400 font-semibold text-lg hover:text-blue-300">
-                            <a
-                                href={repo.html_url}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                class="hover:underline"
-                            >
-                                {repo.name}
-                            </a>
+                            {
+                                repo.html_url ? (
+                                    <a
+                                        href={repo.html_url}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        class="hover:underline"
+                                    >
+                                        {repo.name}
+                                    </a>
+                                ) : (
+                                    <span>{repo.name}</span>
+                                )
+                            }
                         </h3>
-                        <div class="flex items-center space-x-2 text-sm">
+                        <div class="flex items-center space-x-2 text-sm flex-wrap justify-end">
+                            <span class="text-[10px] uppercase tracking-wide px-2 py-1 rounded border border-gray-600 text-gray-400">
+                                {repo.sourceLabel || repo.source}
+                            </span>
                             {repo.stargazers_count > 0 && (
                                 <span class="text-yellow-400">
                                     ⭐ {repo.stargazers_count}
@@ -90,9 +99,21 @@ const { featuredRepo } = Astro.props;
                                 )
                             )}
                         </div>
-                        <span class="text-gray-500 text-xs">
-                            {repo.updated_at}
-                        </span>
+                        <div class="flex items-center gap-3 text-xs">
+                            {repo.homepage && (
+                                <a
+                                    href={repo.homepage}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    class="text-green-400 hover:underline"
+                                >
+                                    live
+                                </a>
+                            )}
+                            <span class="text-gray-500">
+                                {repo.updated_at}
+                            </span>
+                        </div>
                     </div>
                 </div>
             ))

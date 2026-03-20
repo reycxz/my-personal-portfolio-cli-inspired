@@ -86,6 +86,15 @@ export interface ProfileConfig {
   projects: {
     featuredRepos: string[];
     excludeRepos: string[];
+    personalProjects: Array<{
+      name: string;
+      description: string;
+      url?: string;
+      liveUrl?: string;
+      primaryLanguages: string[];
+      updatedAt: string;
+      featured?: boolean;
+    }>;
     categories: {
       [category: string]: string[];
     };
@@ -339,6 +348,15 @@ export const profileConfig: ProfileConfig = {
   projects: {
     featuredRepos: [], // Will be filled from GitHub API
     excludeRepos: ["private-repo", "test-repo"],
+    personalProjects: [
+      {
+        name: "Multi-Agency Booking Platform",
+        description: "A Laravel-based booking and coordination platform for handling scheduling and service workflows across multiple agencies.",
+        primaryLanguages: ["PHP", "Laravel", "JavaScript"],
+        updatedAt: "2026-03-20",
+        featured: true
+      }
+    ],
     categories: {
       "Web Development": ["react-app", "vue-project"],
       "CLI Tools": ["cli-tool", "automation-script"],
