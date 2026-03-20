@@ -300,7 +300,7 @@ import { SITE_DESCRIPTION, SITE_TITLE, terminalConfig } from "../consts";
 				} else if (command === "cd blogs" || command === "cd blog") {
 					window.location.href = "/blogs";
 
-				} else if (command === "cd profile" || command === "cd ~" || command === "cd home") {
+				} else if (command === "cd profile" || command === "cd ~" || command === "cd~" || command === "cd home" || command === "cd") {
 					renderOutput([
 						"┌──────────────────────────────────────────────────┐",
 						"│                  👤  PROFILE                      │",
@@ -544,7 +544,7 @@ import { SITE_DESCRIPTION, SITE_TITLE, terminalConfig } from "../consts";
 				const current = inputCapture.value.toLowerCase();
 				const commands = [
 					"help", "whoami", "contact", "neofetch", "skills", "joke", "history",
-					"clear", "cat resume.txt", "cd projects", "cd blogs", "cd profile",
+					"clear", "cat resume.txt", "cd projects", "cd blogs", "cd profile", "cd ~",
 					"ls", "ll", "open github", "open linkedin", "open messenger"
 				];
 				const match = commands.find(cmd => cmd.startsWith(current));
