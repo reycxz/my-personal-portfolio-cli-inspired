@@ -1,0 +1,388 @@
+{
+  "lastUpdated": "2026-03-20T10:16:01.584Z",
+  "user": {
+    "login": "reycxz",
+    "name": "rey lo",
+    "avatarUrl": "https://avatars.githubusercontent.com/u/203929365?v=4",
+    "bio": "ellie",
+    "followers": 0,
+    "following": 0,
+    "publicRepos": 12
+  },
+  "repositories": [
+    {
+      "name": "LA1_Internet-and-Web-Basics",
+      "description": null,
+      "url": "https://github.com/reycxz/LA1_Internet-and-Web-Basics",
+      "homepageUrl": null,
+      "primaryLanguage": {
+        "name": "HTML"
+      },
+      "primaryLanguages": [
+        "HTML",
+        "JavaScript"
+      ],
+      "languageStats": {
+        "HTML": 440,
+        "JavaScript": 112,
+        "CSS": 85
+      },
+      "stargazerCount": 0,
+      "forkCount": 0,
+      "createdAt": "2026-02-26T03:56:29Z",
+      "updatedAt": "2026-02-26T03:57:53Z",
+      "pushedAt": "2026-02-26T03:57:49Z",
+      "repositoryTopics": [],
+      "licenseInfo": null,
+      "isPrivate": false,
+      "isFork": false,
+      "isArchived": false
+    }
+  ],
+  "stats": {
+    "totalRepos": 12,
+    "totalStars": 0,
+    "totalForks": 0,
+    "languages": [
+      "CSS",
+      "JavaScript",
+      "HTML"
+    ],
+    "allLanguages": [
+      "CSS",
+      "HTML",
+      "JavaScript"
+    ]
+  },
+  "featured": [
+    {
+      "name": "-LA3.2_Interactive",
+      "description": "lab activity 3",
+      "url": "https://github.com/reycxz/-LA3.2_Interactive",
+      "homepageUrl": null,
+      "primaryLanguage": {
+        "name": "CSS"
+      },
+      "primaryLanguages": [
+        "CSS",
+        "JavaScript"
+      ],
+      "languageStats": {
+        "CSS": 14977,
+        "JavaScript": 10799,
+        "HTML": 1721
+      },
+      "stargazerCount": 0,
+      "forkCount": 0,
+      "createdAt": "2026-01-29T04:10:52Z",
+      "updatedAt": "2026-01-29T04:24:14Z",
+      "pushedAt": "2026-01-29T04:24:11Z",
+      "repositoryTopics": [],
+      "licenseInfo": null,
+      "isPrivate": false,
+      "isFork": false,
+      "isArchived": false
+    },
+    {
+      "name": "crypto-pulse",
+      "description": "LA4_Global State & API Integration ",
+      "url": "https://github.com/reycxz/crypto-pulse",
+      "homepageUrl": "https://crypto-pulse-beryl.vercel.app",
+      "primaryLanguage": {
+        "name": "JavaScript"
+      },
+      "primaryLanguages": [
+        "JavaScript",
+        "CSS"
+      ],
+      "languageStats": {
+        "JavaScript": 33882,
+        "CSS": 4422,
+        "HTML": 361
+      },
+      "stargazerCount": 0,
+      "forkCount": 0,
+      "createdAt": "2026-02-19T04:01:48Z",
+      "updatedAt": "2026-03-01T10:38:31Z",
+      "pushedAt": "2026-03-01T10:38:27Z",
+      "repositoryTopics": [],
+      "licenseInfo": null,
+      "isPrivate": false,
+      "isFork": false,
+      "isArchived": false
+    },
+    {
+      "name": "enrollment-ui-design",
+      "description": "Laboratory Activity No. 3.3 Designing a Student Enrollment Portal",
+      "url": "https://github.com/reycxz/enrollment-ui-design",
+      "homepageUrl": null,
+      "primaryLanguage": {
+        "name": "HTML"
+      },
+      "primaryLanguages": [
+        "HTML"
+      ],
+      "languageStats": {
+        "HTML": 33060
+      },
+      "stargazerCount": 0,
+      "forkCount": 0,
+      "createdAt": "2026-02-12T03:22:57Z",
+      "updatedAt": "2026-02-12T03:27:46Z",
+      "pushedAt": "2026-02-12T03:27:43Z",
+      "repositoryTopics": [],
+      "licenseInfo": null,
+      "isPrivate": false,
+      "isFork": false,
+      "isArchived": false
+    },
+    {
+      "name": "enrollment-ui-design_",
+      "description": "basic student registration format for ADEI university. requirement in EmTech1 - Lab 3.3",
+      "url": "https://github.com/reycxz/enrollment-ui-design_",
+      "homepageUrl": null,
+      "primaryLanguage": {
+        "name": "JavaScript"
+      },
+      "primaryLanguages": [
+        "JavaScript",
+        "HTML"
+      ],
+      "languageStats": {
+        "JavaScript": 23855,
+        "HTML": 16695,
+        "CSS": 8958
+      },
+      "stargazerCount": 0,
+      "forkCount": 0,
+      "createdAt": "2026-02-12T03:41:38Z",
+      "updatedAt": "2026-02-26T04:22:11Z",
+      "pushedAt": "2026-02-26T04:22:07Z",
+      "repositoryTopics": [],
+      "licenseInfo": null,
+      "isPrivate": false,
+      "isFork": false,
+      "isArchived": false
+    },
+    {
+      "name": "git-frontend-project",
+      "description": "sample repo only",
+      "url": "https://github.com/reycxz/git-frontend-project",
+      "homepageUrl": null,
+      "primaryLanguage": {
+        "name": "HTML"
+      },
+      "primaryLanguages": [
+        "HTML",
+        "CSS"
+      ],
+      "languageStats": {
+        "HTML": 356,
+        "CSS": 98
+      },
+      "stargazerCount": 0,
+      "forkCount": 0,
+      "createdAt": "2026-01-15T03:52:31Z",
+      "updatedAt": "2026-01-15T04:15:11Z",
+      "pushedAt": "2026-01-15T04:15:07Z",
+      "repositoryTopics": [],
+      "licenseInfo": null,
+      "isPrivate": false,
+      "isFork": false,
+      "isArchived": false
+    },
+    {
+      "name": "LA3.2_Interactive-Login-Dashboard",
+      "description": "Laboratory Activity No. 3.2 Interactive Login Dashboard",
+      "url": "https://github.com/reycxz/LA3.2_Interactive-Login-Dashboard",
+      "homepageUrl": null,
+      "primaryLanguage": {
+        "name": "JavaScript"
+      },
+      "primaryLanguages": [
+        "JavaScript",
+        "HTML"
+      ],
+      "languageStats": {
+        "JavaScript": 1912,
+        "HTML": 1721,
+        "CSS": 930
+      },
+      "stargazerCount": 0,
+      "forkCount": 0,
+      "createdAt": "2026-01-29T03:50:39Z",
+      "updatedAt": "2026-01-29T04:05:36Z",
+      "pushedAt": "2026-01-29T04:05:32Z",
+      "repositoryTopics": [],
+      "licenseInfo": null,
+      "isPrivate": false,
+      "isFork": false,
+      "isArchived": false
+    },
+    {
+      "name": "react-es6-lab",
+      "description": "Modern JavaScript for React (ES6+) and Introduction to React.js",
+      "url": "https://github.com/reycxz/react-es6-lab",
+      "homepageUrl": null,
+      "primaryLanguage": {
+        "name": "JavaScript"
+      },
+      "primaryLanguages": [
+        "JavaScript",
+        "HTML"
+      ],
+      "languageStats": {
+        "JavaScript": 3111,
+        "HTML": 1721,
+        "CSS": 930
+      },
+      "stargazerCount": 0,
+      "forkCount": 0,
+      "createdAt": "2026-01-22T04:48:05Z",
+      "updatedAt": "2026-01-22T05:18:36Z",
+      "pushedAt": "2026-01-22T05:18:32Z",
+      "repositoryTopics": [],
+      "licenseInfo": null,
+      "isPrivate": false,
+      "isFork": false,
+      "isArchived": false
+    },
+    {
+      "name": "react-es6-lab3",
+      "description": "LA3_Modern JavaScript for React (ES6+) and Introduction to React.js",
+      "url": "https://github.com/reycxz/react-es6-lab3",
+      "homepageUrl": null,
+      "primaryLanguage": {
+        "name": "JavaScript"
+      },
+      "primaryLanguages": [
+        "JavaScript",
+        "CSS"
+      ],
+      "languageStats": {
+        "JavaScript": 2705,
+        "CSS": 1760,
+        "HTML": 362
+      },
+      "stargazerCount": 0,
+      "forkCount": 0,
+      "createdAt": "2026-01-29T09:11:51Z",
+      "updatedAt": "2026-01-29T09:39:22Z",
+      "pushedAt": "2026-01-29T09:39:18Z",
+      "repositoryTopics": [],
+      "licenseInfo": null,
+      "isPrivate": false,
+      "isFork": false,
+      "isArchived": false
+    },
+    {
+      "name": "skyline-login-dashboard",
+      "description": "Interactive login dashboard built with React.js | Lab Act 3 | Emtech1",
+      "url": "https://github.com/reycxz/skyline-login-dashboard",
+      "homepageUrl": null,
+      "primaryLanguage": {
+        "name": "CSS"
+      },
+      "primaryLanguages": [
+        "CSS",
+        "JavaScript"
+      ],
+      "languageStats": {
+        "CSS": 14413,
+        "JavaScript": 11154,
+        "HTML": 1721
+      },
+      "stargazerCount": 0,
+      "forkCount": 0,
+      "createdAt": "2026-01-29T04:29:17Z",
+      "updatedAt": "2026-01-29T04:36:35Z",
+      "pushedAt": "2026-02-26T04:17:52Z",
+      "repositoryTopics": [],
+      "licenseInfo": null,
+      "isPrivate": false,
+      "isFork": false,
+      "isArchived": false
+    },
+    {
+      "name": "wedding-inv-project",
+      "description": "emtech1 final prokect",
+      "url": "https://github.com/reycxz/wedding-inv-project",
+      "homepageUrl": "https://reycxz.github.io/wedding-inv-project/",
+      "primaryLanguage": {
+        "name": "CSS"
+      },
+      "primaryLanguages": [
+        "CSS",
+        "HTML"
+      ],
+      "languageStats": {
+        "CSS": 20529,
+        "HTML": 18363,
+        "JavaScript": 13386
+      },
+      "stargazerCount": 0,
+      "forkCount": 0,
+      "createdAt": "2026-03-19T02:46:21Z",
+      "updatedAt": "2026-03-20T09:07:58Z",
+      "pushedAt": "2026-03-20T09:07:55Z",
+      "repositoryTopics": [],
+      "licenseInfo": null,
+      "isPrivate": false,
+      "isFork": false,
+      "isArchived": false
+    },
+    {
+      "name": "wedding_invitation_project",
+      "description": "a final project in EmTech 1",
+      "url": "https://github.com/reycxz/wedding_invitation_project",
+      "homepageUrl": null,
+      "primaryLanguage": {
+        "name": null
+      },
+      "primaryLanguages": [],
+      "languageStats": {},
+      "stargazerCount": 0,
+      "forkCount": 0,
+      "createdAt": "2026-03-19T02:39:59Z",
+      "updatedAt": "2026-03-19T02:45:17Z",
+      "pushedAt": "2026-03-19T02:45:13Z",
+      "repositoryTopics": [],
+      "licenseInfo": null,
+      "isPrivate": false,
+      "isFork": false,
+      "isArchived": false
+    }
+  ],
+  "byLanguage": {
+    "HTML": [
+      {
+        "name": "LA1_Internet-and-Web-Basics",
+        "description": null,
+        "url": "https://github.com/reycxz/LA1_Internet-and-Web-Basics",
+        "homepageUrl": null,
+        "primaryLanguage": {
+          "name": "HTML"
+        },
+        "primaryLanguages": [
+          "HTML",
+          "JavaScript"
+        ],
+        "languageStats": {
+          "HTML": 440,
+          "JavaScript": 112,
+          "CSS": 85
+        },
+        "stargazerCount": 0,
+        "forkCount": 0,
+        "createdAt": "2026-02-26T03:56:29Z",
+        "updatedAt": "2026-02-26T03:57:53Z",
+        "pushedAt": "2026-02-26T03:57:49Z",
+        "repositoryTopics": [],
+        "licenseInfo": null,
+        "isPrivate": false,
+        "isFork": false,
+        "isArchived": false
+      }
+    ]
+  }
+}

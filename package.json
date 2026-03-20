@@ -1,0 +1,26 @@
+{
+  "name": "my-personal-portfolio-cli-inspired",
+  "homepage": "https://github.com/reycxz/my-personal-portfolio-cli-inspired",
+  "private": true,
+  "version": "2.2.2",
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "update-github": "node scripts/fetch-github-data.js"
+  },
+  "dependencies": {
+    "@astrojs/mdx": "4.3.13",
+    "@astrojs/node": "9.5.2",
+    "@astrojs/rss": "4.0.15",
+    "@astrojs/sitemap": "3.7.0",
+    "@tailwindcss/vite": "^4.1.13",
+    "astro": "5.16.16",
+    "highlight.js": "^11.11.1",
+    "markdown-it": "^14.1.0",
+    "sharp": "^0.34.2",
+    "tailwindcss": "^4.1.13"
+  }
+}
