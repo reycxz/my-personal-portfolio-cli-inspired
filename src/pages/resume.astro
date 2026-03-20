@@ -3,7 +3,7 @@ import BaseHead from "../components/BaseHead.astro";
 import Footer from "../components/Footer.astro";
 import Header from "../components/Header.astro";
 import { SITE_DESCRIPTION, SITE_TITLE } from "../consts";
-import { resumeData } from "../data/resume";
+import { resumeData, resumePdfPath } from "../data/resume";
 ---
 
 <!doctype html>
@@ -30,7 +30,7 @@ import { resumeData } from "../data/resume";
 						</div>
 						<div class="flex flex-wrap gap-2">
 							<a href="/" class="px-3 py-2 rounded border text-sm hover:opacity-80" style={{ borderColor: "var(--theme-border)", color: "var(--theme-outputText)" }}>Back to terminal</a>
-							<a href="/CABANOG_REYLORENZ_RESUME-updated.pdf" target="_blank" rel="noopener noreferrer" class="px-3 py-2 rounded border text-sm hover:opacity-80" style={{ borderColor: "var(--theme-border)", color: "var(--theme-outputText)" }}>Download PDF</a>
+							<a href={resumePdfPath} target="_blank" rel="noopener noreferrer" class="px-3 py-2 rounded border text-sm hover:opacity-80" style={{ borderColor: "var(--theme-border)", color: "var(--theme-outputText)" }}>Download PDF</a>
 							<button id="print-resume" class="px-3 py-2 rounded text-sm font-semibold" style={{ backgroundColor: "var(--theme-accent)", color: "var(--theme-background)" }}>Print / Save PDF</button>
 						</div>
 					</div>

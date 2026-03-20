@@ -4,7 +4,7 @@ import CommandOutput from "../components/CommandOutput.astro";
 import Footer from "../components/Footer.astro";
 import Header from "../components/Header.astro";
 import { SITE_DESCRIPTION, SITE_TITLE, terminalConfig } from "../consts";
-import { terminalResumeLines } from "../data/resume";
+import { resumePdfPath, terminalResumeLines } from "../data/resume";
 ---
 
 <!doctype html>
@@ -241,7 +241,7 @@ import { terminalResumeLines } from "../data/resume";
 		caret-color: #22c55e;
 	}
 </style>
-<script define:vars={{ terminalResumeLines }}>
+<script define:vars={{ resumePdfPath, terminalResumeLines }}>
 	// ── Typing animation on welcome title ──────────────────────────────────
 	const welcomeTitle = document.getElementById("welcome-title");
 	if (welcomeTitle) {
@@ -595,7 +595,7 @@ import { terminalResumeLines } from "../data/resume";
 					renderOutput(["  ↗ Opening Messenger in a new tab...", ""], "var(--theme-primary)", commandStr);
 
 				} else if (command === "download resume") {
-					window.open("/CABANOG_REYLORENZ_RESUME-updated.pdf", "_blank", "noopener,noreferrer");
+					window.open(resumePdfPath, "_blank", "noopener,noreferrer");
 					renderOutput(["  ↗ Opening resume PDF in a new tab...", ""], "var(--theme-primary)", commandStr);
 
 				// ── Misc ──────────────────────────────────────────────────

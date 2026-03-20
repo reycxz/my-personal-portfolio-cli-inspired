@@ -1,3 +1,5 @@
+export const resumePdfPath = "/CABANOG_REYLORENZ_RESUME-updated.pdf";
+
 export const resumeData = {
   basics: {
     name: "Rey Lorenz B. Cabanog",
@@ -6,13 +8,13 @@ export const resumeData = {
     phone: "0917-767-2769",
     email: "reylorenzc@gmail.com",
     github: "https://github.com/reycxz",
-    linkedin: "https://www.linkedin.com/in/reylorenzc/",
+    linkedin: "https://www.linkedin.com/in/reylorenzc/"
   },
   summary: [
-    "Working student with experience across customer support, dispatch operations,",
-    "incident documentation, and technical troubleshooting.",
-    "Currently pursuing Computer Engineering with a focus on cybersecurity,",
-    "networking, and practical systems support.",
+    "Working student with experience in dispatch, customer support, incident documentation,",
+    "and technical troubleshooting across voice, chat, and service operations.",
+    "Currently pursuing Computer Engineering with focus on cybersecurity, networking,",
+    "and practical systems support."
   ],
   workExperience: [
     {
@@ -21,10 +23,10 @@ export const resumeData = {
       location: "Ayala Ave., Makati",
       period: "Jul 2025 - Present",
       bullets: [
-        "Serve as central contact for incident management and rapid security response.",
-        "Maintain incident logs and service tickets with accurate field documentation.",
-        "Monitor communication channels between field officers and management.",
-      ],
+        "Serve as a central point of contact for incident management and rapid response.",
+        "Manage incident logs and service tickets with accurate documentation.",
+        "Monitor communication channels between field officers and management."
+      ]
     },
     {
       title: "Order Fulfillment and Support",
@@ -32,10 +34,10 @@ export const resumeData = {
       location: "Eastwood Cyberpark, Quezon City",
       period: "Jul 2022 - Jun 2024",
       bullets: [
-        "Managed high-volume Level 1 ticket queues with strong customer satisfaction.",
+        "Managed high-volume Level 1 ticket queues while maintaining a 95% satisfaction rating.",
         "Retrieved and verified requested data from databases and electronic files.",
-        "Hit productivity, quality, and sales targets through proactive problem-solving.",
-      ],
+        "Met productivity, quality, and sales targets through proactive problem-solving."
+      ]
     },
     {
       title: "Chat Representative",
@@ -43,9 +45,9 @@ export const resumeData = {
       location: "Ortigas Center, Pasig City",
       period: "Jun 2021 - Aug 2021",
       bullets: [
-        "Handled up to 8 concurrent chats while maintaining service levels.",
-        "Provided personalized user support and technical assistance.",
-      ],
+        "Handled up to 8 concurrent chats while troubleshooting user inquiries.",
+        "Provided personalized advice and technical assistance to customers."
+      ]
     },
     {
       title: "Customer Service Representative",
@@ -54,9 +56,9 @@ export const resumeData = {
       period: "Nov 2019 - Apr 2021",
       bullets: [
         "Maintained high customer satisfaction through proactive issue resolution.",
-        "Supported both phone and chat operations across multiple accounts.",
-      ],
-    },
+        "Supported both voice and chat operations across multiple accounts."
+      ]
+    }
   ],
   education: [
     {
@@ -68,21 +70,21 @@ export const resumeData = {
         "CHED Scholarship recipient",
         "Dean's List, AY 2018-2019 (1st and 2nd Semester)",
         "Worked as Student Assistant",
-        "Active member of CoESS and AWS",
-      ],
+        "Active member of CoESS and AWS"
+      ]
     },
     {
       degree: "STEM",
       school: "Our Lady of Fatima University - Valenzuela Senior High",
       period: "2016 - 2018",
-      bullets: [],
-    },
+      bullets: []
+    }
   ],
   certifications: [
     "CCNA: Switching, Routing, and Wireless Essentials - Cisco Networking Academy (Dec 17, 2025)",
     "Endpoint Security - Cisco Networking Academy / TIP Manila (Oct 14, 2025)",
     "Cyber Threat Management - Cisco Networking Academy / TIP Manila (Sep 25, 2025)",
-    "CCNA: Introduction to Networks - Cisco Networking Academy (Aug 05, 2025)",
+    "CCNA: Introduction to Networks - Cisco Networking Academy (Aug 05, 2025)"
   ],
   skillGroups: [
     {
@@ -97,8 +99,8 @@ export const resumeData = {
         "Switch & Router Configuration",
         "Endpoint Protection",
         "Patch Management",
-        "Cyber Threat Management",
-      ],
+        "Cyber Threat Management"
+      ]
     },
     {
       name: "Tech Support & OS",
@@ -107,8 +109,8 @@ export const resumeData = {
         "MacOS Troubleshooting",
         "Hardware & Software Configuration",
         "VoIP Support",
-        "Basic Network Administration",
-      ],
+        "Basic Network Administration"
+      ]
     },
     {
       name: "Incident Management",
@@ -118,14 +120,22 @@ export const resumeData = {
         "Incident Logging",
         "Documentation",
         "Tier 1 Escalation Handling",
-        "High-Volume Issue Resolution",
-      ],
+        "High-Volume Issue Resolution"
+      ]
     },
     {
       name: "Tools & Software",
-      items: ["Oracle", "Salesforce", "Gmail", "MS Word", "MS Excel", "Avaya", "Digital Communication Systems"],
-    },
-  ],
+      items: [
+        "Oracle",
+        "Salesforce",
+        "Gmail",
+        "MS Word",
+        "MS Excel",
+        "Avaya",
+        "Digital Communication Systems"
+      ]
+    }
+  ]
 } as const;
 
 export const terminalResumeLines = [
@@ -139,28 +149,44 @@ export const terminalResumeLines = [
   "  0917-767-2769 | reylorenzc@gmail.com",
   "",
   "  SUMMARY",
-  "    Working student with real-world experience in dispatch, customer support,",
-  "    incident documentation, and technical troubleshooting.",
+  "    Working student with experience in dispatch, customer",
+  "    support, incident documentation,",
+  "    and technical troubleshooting across voice, chat, and",
+  "    service operations.",
+  "    Currently pursuing Computer Engineering with focus on",
+  "    cybersecurity, networking,",
+  "    and practical systems support.",
   "",
   "  EXPERIENCE",
-  "    Client Associate - Dispatcher | OpenAccessBPO / Creative Security Company",
+  "    Client Associate - Dispatcher | OpenAccessBPO / Creative",
+  "    Security Company",
   "    Jul 2025 - Present",
-  "    Order Fulfillment and Support | Sourcefit Inc. | Jul 2022 - Jun 2024",
-  "    Chat Representative | Acquire BPO / VividSeats | Jun 2021 - Aug 2021",
-  "    Customer Service Rep | 24-7 Intouch PH | Nov 2019 - Apr 2021",
+  "    Order Fulfillment and Support | Sourcefit Inc.",
+  "    Jul 2022 - Jun 2024",
+  "    Chat Representative | Acquire BPO / VividSeats",
+  "    Jun 2021 - Aug 2021",
+  "    Customer Service Representative | 24-7 Intouch PH / Newell",
+  "    Brands / Walmart.com",
+  "    Nov 2019 - Apr 2021",
   "",
   "  EDUCATION",
-  "    BS Computer Engineering | TIP Manila",
-  "    STEM | Our Lady of Fatima University - Valenzuela",
+  "    BS Computer Engineering | Technological Institute of the",
+  "    Philippines - Manila",
+  "    STEM | Our Lady of Fatima University - Valenzuela Senior",
+  "    High",
   "",
   "  CERTIFICATIONS",
-  "    CCNA SRWE",
-  "    Endpoint Security",
-  "    Cyber Threat Management",
-  "    CCNA Introduction to Networks",
+  "    CCNA: Switching, Routing, and Wireless Essentials - Cisco",
+  "    Networking Academy (Dec 17, 2025)",
+  "    Endpoint Security - Cisco Networking Academy / TIP Manila",
+  "    (Oct 14, 2025)",
+  "    Cyber Threat Management - Cisco Networking Academy / TIP",
+  "    Manila (Sep 25, 2025)",
+  "    CCNA: Introduction to Networks - Cisco Networking Academy",
+  "    (Aug 05, 2025)",
   "",
   "  TIP",
   "    type 'open resume' for the full page",
   "    type 'download resume' to open the original PDF",
-  "",
-];
+  ""
+] as const;

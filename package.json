@@ -9,7 +9,8 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "update-github": "node scripts/fetch-github-data.js"
+    "update-github": "node scripts/fetch-github-data.js",
+    "import-resume": "node scripts/import-resume.mjs"
   },
   "dependencies": {
     "@astrojs/mdx": "4.3.13",
@@ -20,6 +21,7 @@
     "astro": "5.16.16",
     "highlight.js": "^11.11.1",
     "markdown-it": "^14.1.0",
+    "pdf-parse": "^2.4.5",
     "sharp": "^0.34.2",
     "tailwindcss": "^4.1.13"
   }
