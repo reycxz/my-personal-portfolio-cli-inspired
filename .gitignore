@@ -44,6 +44,9 @@ pnpm-debug.log*
 .env
 .env.production
 
+# deployment output
+.vercel
+
 # macOS-specific files
 .DS_Store
 

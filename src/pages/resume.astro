@@ -20,7 +20,7 @@ import { resumeData, resumePdfPath } from "../data/resume";
 			}}
 		>
 			<Header />
-			<main class="flex-1 max-w-5xl mx-auto w-full px-3 sm:px-6 py-6 sm:py-10 font-mono">
+			<main class="safe-px flex-1 max-w-5xl mx-auto w-full px-3 sm:px-6 py-4 sm:py-10 pb-8 md:pb-10 font-mono">
 				<div class="border rounded-lg overflow-hidden shadow-xl" style={{ borderColor: "var(--theme-border)" }}>
 					<div class="px-4 sm:px-6 py-4 border-b flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3" style={{ borderColor: "var(--theme-border)", backgroundColor: "var(--theme-welcomeBoxBg)" }}>
 						<div>
@@ -28,10 +28,10 @@ import { resumeData, resumePdfPath } from "../data/resume";
 							<h1 class="text-2xl sm:text-3xl font-bold" style={{ color: "var(--theme-primary)" }}>{resumeData.basics.name}</h1>
 							<p class="text-sm sm:text-base mt-1" style={{ color: "var(--theme-outputText)" }}>{resumeData.basics.title}</p>
 						</div>
-						<div class="flex flex-wrap gap-2">
-							<a href="/" class="px-3 py-2 rounded border text-sm hover:opacity-80" style={{ borderColor: "var(--theme-border)", color: "var(--theme-outputText)" }}>Back to terminal</a>
-							<a href={resumePdfPath} target="_blank" rel="noopener noreferrer" class="px-3 py-2 rounded border text-sm hover:opacity-80" style={{ borderColor: "var(--theme-border)", color: "var(--theme-outputText)" }}>Download PDF</a>
-							<button id="print-resume" class="px-3 py-2 rounded text-sm font-semibold" style={{ backgroundColor: "var(--theme-accent)", color: "var(--theme-background)" }}>Print / Save PDF</button>
+						<div class="flex flex-col sm:flex-row flex-wrap gap-2 w-full sm:w-auto">
+							<a href="/" class="touch-target px-3 py-2 rounded border text-sm hover:opacity-80" style={{ borderColor: "var(--theme-border)", color: "var(--theme-outputText)" }}>Back to terminal</a>
+							<a href={resumePdfPath} target="_blank" rel="noopener noreferrer" class="touch-target px-3 py-2 rounded border text-sm hover:opacity-80" style={{ borderColor: "var(--theme-border)", color: "var(--theme-outputText)" }}>Download PDF</a>
+							<button id="print-resume" class="touch-target px-3 py-2 rounded text-sm font-semibold" style={{ backgroundColor: "var(--theme-accent)", color: "var(--theme-background)" }}>Print / Save PDF</button>
 						</div>
 					</div>
 
@@ -40,7 +40,7 @@ import { resumeData, resumePdfPath } from "../data/resume";
 							<div>
 								<h2 class="text-lg font-bold mb-3" style={{ color: "var(--theme-info)" }}>Summary</h2>
 								<div class="space-y-2" style={{ color: "var(--theme-outputText)" }}>
-									{resumeData.summary.map((line) => <p class="leading-7">{line}</p>)}
+									{resumeData.summary.map((line) => <p class="leading-7 sm:leading-8">{line}</p>)}
 								</div>
 								<div class="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
 									<div>
@@ -49,16 +49,16 @@ import { resumeData, resumePdfPath } from "../data/resume";
 									</div>
 									<div>
 										<p style={{ color: "var(--theme-muted)" }}>Phone / Email</p>
-										<p>{resumeData.basics.phone}</p>
-										<p>{resumeData.basics.email}</p>
+										<p class="break-all">{resumeData.basics.phone}</p>
+										<p class="break-all">{resumeData.basics.email}</p>
 									</div>
 									<div>
 										<p style={{ color: "var(--theme-muted)" }}>GitHub</p>
-										<a href={resumeData.basics.github} target="_blank" rel="noopener noreferrer" class="hover:underline" style={{ color: "var(--theme-primary)" }}>{resumeData.basics.github}</a>
+										<a href={resumeData.basics.github} target="_blank" rel="noopener noreferrer" class="hover:underline break-all" style={{ color: "var(--theme-primary)" }}>{resumeData.basics.github}</a>
 									</div>
 									<div>
 										<p style={{ color: "var(--theme-muted)" }}>LinkedIn</p>
-										<a href={resumeData.basics.linkedin} target="_blank" rel="noopener noreferrer" class="hover:underline" style={{ color: "var(--theme-primary)" }}>{resumeData.basics.linkedin}</a>
+										<a href={resumeData.basics.linkedin} target="_blank" rel="noopener noreferrer" class="hover:underline break-all" style={{ color: "var(--theme-primary)" }}>{resumeData.basics.linkedin}</a>
 									</div>
 								</div>
 							</div>

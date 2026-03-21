@@ -1,4 +1,5 @@
 ---
+import ContactPanel from "./ContactPanel.astro";
 import { NAVIGATION } from "../consts";
 import "../styles/global.css";
 
@@ -14,14 +15,14 @@ const timeString = date.toLocaleTimeString();
 		borderColor: "var(--theme-border)",
 	}}
 >
-	<div class="max-w-screen-xl mx-auto px-2 sm:px-4 py-2 sm:py-3">
+	<div class="safe-px max-w-screen-xl mx-auto px-3 sm:px-4 py-2 sm:py-3">
 		{/* Terminal-style navigation */}
-		<div class="flex items-center justify-between">
+		<div class="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
 			{/* Left side - Terminal prompt */}
-			<div class="flex items-center space-x-1 text-xs sm:text-sm">
+			<div class="flex items-center justify-between gap-3 text-xs sm:text-sm md:justify-start">
 				<a
 					href={NAVIGATION.brandUrl}
-					class="font-bold text-sm sm:text-base hover:opacity-75 transition-opacity"
+					class="font-bold text-sm sm:text-base hover:opacity-75 transition-opacity shrink-0"
 					style={{ color: "var(--theme-primary)" }}
 				>
 					{NAVIGATION.brandName}
@@ -60,25 +61,35 @@ const timeString = date.toLocaleTimeString();
 
 			{/* Right side - Navigation commands & Theme selector */}
 			<div
-				class="flex items-center space-x-2 sm:space-x-3 text-xs sm:text-sm"
+				class="flex flex-wrap items-center gap-2 sm:gap-3 text-xs sm:text-sm md:justify-end"
 			>
-				{/* Theme toggle button */}
-				<!-- <button
-                    class="px-2 py-1 rounded text-xs font-mono hover:opacity-75 transition-opacity"
-                    style={{
-                        backgroundColor: "var(--theme-accent)",
-                        color: "var(--theme-background)",
-                    }}
-                    title={`Current: ${themeDisplayNames[currentTheme]} (click to toggle)`}
-                >
-                    🎨 {currentTheme}
-                </button> -->
 				<button
 					id="themeToggle"
-					class="px-2 py-1 rounded text-xs font-mono hover:opacity-75 transition-opacity"
+					class="theme-toggle touch-target rounded-full text-xs font-mono hover:opacity-75 transition-opacity"
 					style="background-color: var(--theme-accent); color: var(--theme-background);"
+					aria-label="Toggle theme"
+					title="Toggle theme"
 				>
-					[ Theme: Dark Terminal ]
+					<svg
+						class="theme-toggle__icon"
+						viewBox="0 0 24 24"
+						fill="none"
+						stroke="currentColor"
+						stroke-width="1.8"
+						stroke-linecap="round"
+						stroke-linejoin="round"
+						aria-hidden="true"
+					>
+						<path d="M12 3v2.5" />
+						<path d="M12 18.5V21" />
+						<path d="M4.93 4.93l1.77 1.77" />
+						<path d="M17.3 17.3l1.77 1.77" />
+						<path d="M3 12h2.5" />
+						<path d="M18.5 12H21" />
+						<path d="M4.93 19.07l1.77-1.77" />
+						<path d="M17.3 6.7l1.77-1.77" />
+						<path d="M15.5 12a3.5 3.5 0 1 1-7 0a3.5 3.5 0 0 1 7 0Z" />
+					</svg>
 				</button>
 
 				{
@@ -92,12 +103,21 @@ const timeString = date.toLocaleTimeString();
 									|
 								</span>
 							)}
-							{link.external ? (
+							{link.path === "#contact" ? (
+								<button
+									type="button"
+									data-open-contact-panel
+									class="nav-command touch-target inline-flex items-center rounded px-3 py-2 font-source tracking-wide transition-colors"
+									title={`Open ${link.name}`}
+								>
+									<span>{link.name}</span>
+								</button>
+							) : link.external ? (
 								<a
 									href={link.path}
 									target="_blank"
 									rel="noopener noreferrer"
-									class="nav-command inline-flex items-center rounded px-1.5 py-0.5 font-source tracking-wide transition-colors"
+									class="nav-command touch-target inline-flex items-center rounded px-3 py-2 font-source tracking-wide transition-colors"
 									title={`Open ${link.name}`}
 								>
 									<span>{link.name}</span>
@@ -105,7 +125,7 @@ const timeString = date.toLocaleTimeString();
 							) : (
 								<a
 									href={link.path}
-									class="nav-command inline-flex items-center rounded px-1.5 py-0.5 font-source tracking-wide transition-colors"
+									class="nav-command touch-target inline-flex items-center rounded px-3 py-2 font-source tracking-wide transition-colors"
 									title={`Go to ${link.name}`}
 								>
 									<span>{link.name}</span>
@@ -121,7 +141,7 @@ const timeString = date.toLocaleTimeString();
 		{
 			NAVIGATION.systemInfo.showDateTime && (
 				<div
-					class="lg:hidden mt-2 text-xs text-center"
+					class="lg:hidden text-xs text-left md:text-center"
 					style={{ color: "var(--theme-muted)" }}
 				>
 					{dateString} {timeString}
@@ -131,7 +151,27 @@ const timeString = date.toLocaleTimeString();
 	</div>
 </nav>
 
+<ContactPanel />
+
 <style>
+	.theme-toggle {
+		width: 2.4rem;
+		height: 2.4rem;
+		min-height: 2.4rem;
+		padding: 0;
+		display: inline-grid;
+		place-items: center;
+		flex: 0 0 auto;
+		aspect-ratio: 1;
+		border: 1px solid color-mix(in srgb, var(--theme-accent) 75%, #000 25%);
+		box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.08) inset;
+	}
+
+	.theme-toggle__icon {
+		width: 1rem;
+		height: 1rem;
+	}
+
 	.nav-command {
 		color: var(--theme-primary);
 		border: 1px solid transparent;
@@ -147,23 +187,54 @@ const timeString = date.toLocaleTimeString();
 <script>
 	import { getThemeDisplayNames } from "../utils/theme";
 
-	// theme toggle
 	const themeDisplayNames = getThemeDisplayNames();
 	const themes = Object.keys(themeDisplayNames);
-	console.log("Available themes:", themes);
-
+	const themeStorageKey = "site-theme";
 	const themeToggle = document.getElementById("themeToggle");
-	let current = 0;
 
-	console.log("Current theme:", themes[current]);
+	function getCurrentTheme() {
+		const activeTheme = document.documentElement.getAttribute("data-theme");
+		if (activeTheme && themes.includes(activeTheme)) {
+			return activeTheme;
+		}
+
+		try {
+			const savedTheme = localStorage.getItem(themeStorageKey);
+			if (savedTheme && themes.includes(savedTheme)) {
+				return savedTheme;
+			}
+		} catch {
+			return themes[0];
+		}
+
+		return themes[0];
+	}
+
+	function applyTheme(themeName) {
+		document.documentElement.setAttribute("data-theme", themeName);
+		if (themeToggle) {
+			themeToggle.setAttribute("title", `Theme: ${themeDisplayNames[themeName]}`);
+			themeToggle.setAttribute("aria-label", `Theme: ${themeDisplayNames[themeName]}. Tap to switch.`);
+		}
+
+		try {
+			localStorage.setItem(themeStorageKey, themeName);
+		} catch {
+			// Ignore storage failures and keep the in-memory theme.
+		}
+	}
+
+	let current = themes.indexOf(getCurrentTheme());
+	if (current < 0) {
+		current = 0;
+	}
+
+	applyTheme(themes[current]);
+
 	if (themeToggle) {
 		themeToggle.addEventListener("click", () => {
 			current = (current + 1) % themes.length;
-			document.documentElement.setAttribute(
-				"data-theme",
-				themes[current],
-			);
-			themeToggle.textContent = `[ Theme: ${themeDisplayNames[themes[current]]} ]`;
+			applyTheme(themes[current]);
 		});
 	}
 </script>

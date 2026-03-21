@@ -14,9 +14,12 @@ export const getAvailableThemes = () => {
 };
 
 export const getThemeDisplayNames = (): Record<string, string> => {
-    return Object.fromEntries(
-        Object.entries(themes).map(([key, theme]) => [key, theme.charAt(0).toUpperCase() + theme.slice(1)])
-    );
+    return {
+        dark: "Dark Terminal",
+        light: "Light",
+        cyberpunk: "Cyberpunk",
+        bluloco: "Bluloco",
+    };
 };
 
 

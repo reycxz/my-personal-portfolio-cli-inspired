@@ -1,0 +1,649 @@
+---
+import profileConfig from "../../profile.config";
+import { resumeData } from "../data/resume";
+
+const quickPrompts = [
+	"What kind of work is Rey looking for?",
+	"What does Rey build?",
+	"What is Rey's cybersecurity background?",
+	"How can I contact Rey quickly?",
+];
+
+const assistantGreeting = "Hi, I'm a lightweight Rey assistant. Ask about skills, projects, experience, or how to contact him.";
+---
+
+<div id="contact-panel" class="contact-panel" aria-hidden="true">
+	<div class="contact-panel__backdrop" data-close-contact-panel></div>
+	<div
+		class="contact-panel__dialog"
+		role="dialog"
+		aria-modal="true"
+		aria-labelledby="contact-panel-title"
+	>
+		<div class="contact-panel__header">
+			<div>
+				<p class="contact-panel__eyebrow">Let's connect</p>
+				<h2 id="contact-panel-title" class="contact-panel__title">Ping Rey</h2>
+			</div>
+			<button
+				type="button"
+				class="contact-panel__close"
+				data-close-contact-panel
+				aria-label="Close contact panel"
+			>
+				✕
+			</button>
+		</div>
+
+		<p class="contact-panel__intro">
+			Send a direct message, launch an email draft, or ask the built-in Rey assistant for a quick overview.
+		</p>
+
+		<div class="contact-panel__tabs" role="tablist" aria-label="Contact options">
+			<button type="button" class="contact-panel__tab is-active" data-contact-tab="contact" role="tab" aria-selected="true">
+				Contact Me
+			</button>
+			<button type="button" class="contact-panel__tab" data-contact-tab="assistant" role="tab" aria-selected="false">
+				Ask Rey
+			</button>
+		</div>
+
+		<section class="contact-panel__section is-active" data-contact-section="contact">
+			<div class="contact-panel__grid">
+				<form id="contact-form" class="contact-form">
+					<label class="contact-form__field">
+						<span>Enter your name</span>
+						<input type="text" name="name" placeholder="Enter your name" required />
+					</label>
+					<label class="contact-form__field">
+						<span>Enter your email</span>
+						<input type="email" name="email" placeholder="Enter your email" required />
+					</label>
+					<label class="contact-form__field">
+						<span>Enter your message</span>
+						<textarea name="message" rows="5" placeholder="Enter your message" required></textarea>
+					</label>
+					<div class="contact-form__actions">
+						<button type="submit" class="contact-panel__primary">Open Email Draft</button>
+						<a class="contact-panel__secondary" href={`mailto:${resumeData.basics.email}`}>Email Directly</a>
+					</div>
+					<p id="contact-form-status" class="contact-form__status" aria-live="polite"></p>
+				</form>
+
+				<div class="contact-panel__info">
+					<div class="contact-panel__card">
+						<h3>Quick links</h3>
+						<a href={`mailto:${resumeData.basics.email}`}>{resumeData.basics.email}</a>
+						<a href={resumeData.basics.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn</a>
+						<a href={resumeData.basics.github} target="_blank" rel="noopener noreferrer">GitHub</a>
+					</div>
+					<div class="contact-panel__card">
+						<h3>Best for</h3>
+						<ul>
+							<li>Full-time and contract roles</li>
+							<li>Laravel, React, Astro, and Python work</li>
+							<li>Security-focused builds and portfolio collaborations</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<section class="contact-panel__section" data-contact-section="assistant">
+			<div class="assistant-panel">
+				<div class="assistant-panel__toolbar">
+					<p id="assistant-status" class="assistant-panel__status">Local assistant mode</p>
+					<button type="button" id="assistant-reset" class="assistant-panel__reset">New chat</button>
+				</div>
+				<div id="assistant-messages" class="assistant-panel__messages" aria-live="polite"></div>
+				<div class="assistant-panel__prompts">
+					{
+						quickPrompts.map((prompt) => (
+							<button type="button" class="assistant-panel__prompt" data-assistant-prompt={prompt}>
+								{prompt}
+							</button>
+						))
+					}
+				</div>
+				<form id="assistant-form" class="assistant-panel__composer">
+					<input id="assistant-input" type="text" placeholder="Ask about work, skills, availability, or contact info." />
+					<button type="submit" class="contact-panel__primary">Send</button>
+				</form>
+			</div>
+		</section>
+	</div>
+</div>
+
+<style>
+	.contact-panel {
+		position: fixed;
+		inset: 0;
+		display: none;
+		align-items: center;
+		justify-content: center;
+		padding: 1rem;
+		z-index: 60;
+	}
+
+	.contact-panel.is-open {
+		display: flex;
+	}
+
+	.contact-panel__backdrop {
+		position: absolute;
+		inset: 0;
+		background: rgba(0, 0, 0, 0.72);
+		backdrop-filter: blur(6px);
+	}
+
+	.contact-panel__dialog {
+		position: relative;
+		width: min(100%, 880px);
+		max-height: min(90vh, 820px);
+		overflow: auto;
+		border-radius: 1rem;
+		padding: 1.25rem;
+		border: 1px solid var(--theme-border);
+		background: color-mix(in srgb, var(--theme-background) 88%, #101828 12%);
+		box-shadow: 0 24px 80px rgba(0, 0, 0, 0.45);
+	}
+
+	.contact-panel__header {
+		display: flex;
+		align-items: flex-start;
+		justify-content: space-between;
+		gap: 1rem;
+	}
+
+	.contact-panel__eyebrow {
+		margin: 0 0 0.25rem;
+		font-size: 0.75rem;
+		letter-spacing: 0.12em;
+		text-transform: uppercase;
+		color: var(--theme-muted);
+	}
+
+	.contact-panel__title {
+		margin: 0;
+		font-size: clamp(1.5rem, 4vw, 2rem);
+		color: var(--theme-primary);
+	}
+
+	.contact-panel__close {
+		width: 2.5rem;
+		height: 2.5rem;
+		border: 1px solid var(--theme-border);
+		border-radius: 999px;
+		background: transparent;
+		color: var(--theme-text);
+		cursor: pointer;
+	}
+
+	.contact-panel__intro {
+		margin: 0.75rem 0 1rem;
+		color: var(--theme-outputText);
+		line-height: 1.7;
+	}
+
+	.contact-panel__tabs {
+		display: inline-flex;
+		gap: 0.5rem;
+		padding: 0.25rem;
+		border-radius: 999px;
+		background: var(--theme-welcomeBoxBg);
+		margin-bottom: 1rem;
+	}
+
+	.contact-panel__tab {
+		border: 0;
+		border-radius: 999px;
+		padding: 0.7rem 1rem;
+		background: transparent;
+		color: var(--theme-outputText);
+		cursor: pointer;
+	}
+
+	.contact-panel__tab.is-active {
+		background: var(--theme-primary);
+		color: var(--theme-background);
+	}
+
+	.contact-panel__section {
+		display: none;
+	}
+
+	.contact-panel__section.is-active {
+		display: block;
+	}
+
+	.contact-panel__grid {
+		display: grid;
+		grid-template-columns: minmax(0, 1.4fr) minmax(240px, 1fr);
+		gap: 1rem;
+	}
+
+	.contact-form,
+	.contact-panel__info,
+	.assistant-panel {
+		display: grid;
+		gap: 1rem;
+	}
+
+	.contact-form__field {
+		display: grid;
+		gap: 0.4rem;
+		color: var(--theme-outputText);
+	}
+
+	.contact-form__field input,
+	.contact-form__field textarea,
+	.assistant-panel__composer input {
+		width: 100%;
+		border: 1px solid var(--theme-border);
+		border-radius: 0.75rem;
+		background: var(--theme-welcomeBoxBg);
+		color: var(--theme-text);
+		padding: 0.85rem 1rem;
+	}
+
+	.contact-form__field textarea {
+		resize: vertical;
+	}
+
+	.contact-form__actions,
+	.assistant-panel__composer {
+		display: flex;
+		gap: 0.75rem;
+		flex-wrap: wrap;
+	}
+
+	.contact-panel__primary,
+	.contact-panel__secondary,
+	.assistant-panel__prompt {
+		border-radius: 0.75rem;
+		padding: 0.8rem 1rem;
+		border: 1px solid var(--theme-border);
+		text-decoration: none;
+		cursor: pointer;
+	}
+
+	.contact-panel__primary {
+		background: var(--theme-primary);
+		color: var(--theme-background);
+		border-color: var(--theme-primary);
+	}
+
+	.contact-panel__secondary,
+	.assistant-panel__prompt {
+		background: transparent;
+		color: var(--theme-text);
+	}
+
+	.contact-form__status {
+		margin: 0;
+		font-size: 0.9rem;
+		color: var(--theme-info);
+	}
+
+	.contact-panel__card {
+		padding: 1rem;
+		border: 1px solid var(--theme-border);
+		border-radius: 0.9rem;
+		background: var(--theme-welcomeBoxBg);
+	}
+
+	.contact-panel__card h3 {
+		margin: 0 0 0.75rem;
+		color: var(--theme-primary);
+	}
+
+	.contact-panel__card a {
+		display: block;
+		margin-bottom: 0.6rem;
+		color: var(--theme-info);
+	}
+
+	.contact-panel__card ul {
+		margin: 0;
+		padding-left: 1.2rem;
+		color: var(--theme-outputText);
+	}
+
+	.assistant-panel__messages {
+		min-height: 220px;
+		max-height: 360px;
+		overflow: auto;
+		padding: 1rem;
+		border-radius: 0.9rem;
+		border: 1px solid var(--theme-border);
+		background: var(--theme-welcomeBoxBg);
+	}
+
+	.assistant-panel__toolbar {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 0.75rem;
+	}
+
+	.assistant-panel__status {
+		margin: 0;
+		font-size: 0.9rem;
+		color: var(--theme-muted);
+	}
+
+	.assistant-panel__reset {
+		border: 1px solid var(--theme-border);
+		border-radius: 999px;
+		background: transparent;
+		color: var(--theme-outputText);
+		padding: 0.55rem 0.85rem;
+		cursor: pointer;
+	}
+
+	.assistant-panel__message {
+		max-width: 90%;
+		padding: 0.85rem 1rem;
+		border-radius: 1rem;
+		line-height: 1.7;
+		margin-bottom: 0.75rem;
+		white-space: pre-wrap;
+	}
+
+	.assistant-panel__message--assistant {
+		background: color-mix(in srgb, var(--theme-primary) 12%, transparent);
+		border: 1px solid color-mix(in srgb, var(--theme-primary) 30%, var(--theme-border));
+	}
+
+	.assistant-panel__message--user {
+		margin-left: auto;
+		background: color-mix(in srgb, var(--theme-info) 14%, transparent);
+		border: 1px solid color-mix(in srgb, var(--theme-info) 30%, var(--theme-border));
+	}
+
+	.assistant-panel__prompts {
+		display: flex;
+		gap: 0.6rem;
+		flex-wrap: wrap;
+	}
+
+	.assistant-panel__typing {
+		opacity: 0.8;
+		font-style: italic;
+	}
+
+	@media (max-width: 768px) {
+		.contact-panel {
+			padding: 0.75rem;
+		}
+
+		.contact-panel__dialog {
+			padding: 1rem;
+			border-radius: 0.9rem;
+		}
+
+		.contact-panel__grid {
+			grid-template-columns: 1fr;
+		}
+
+		.contact-panel__tabs {
+			display: flex;
+			width: 100%;
+		}
+
+		.contact-panel__tab {
+			flex: 1;
+		}
+
+		.assistant-panel__message {
+			max-width: 100%;
+		}
+
+		.assistant-panel__toolbar {
+			align-items: flex-start;
+			flex-direction: column;
+		}
+	}
+</style>
+
+<script
+	define:vars={{
+		contactEmail: resumeData.basics.email,
+		linkedinUrl: resumeData.basics.linkedin,
+		githubUrl: resumeData.basics.github,
+		profileTitle: profileConfig.profile.title,
+		profileBio: profileConfig.profile.bio,
+		profileLocation: profileConfig.profile.location,
+		profileFocus: profileConfig.profile.currentFocus,
+		profileSkills: profileConfig.skills,
+		profileFunFact: profileConfig.profile.funFact,
+		certifications: resumeData.certifications,
+		assistantGreeting,
+	}}
+>
+	const panel = document.getElementById("contact-panel");
+	const form = document.getElementById("contact-form");
+	const formStatus = document.getElementById("contact-form-status");
+	const assistantForm = document.getElementById("assistant-form");
+	const assistantInput = document.getElementById("assistant-input");
+	const assistantMessages = document.getElementById("assistant-messages");
+	const assistantStatus = document.getElementById("assistant-status");
+	const assistantReset = document.getElementById("assistant-reset");
+	const tabButtons = document.querySelectorAll("[data-contact-tab]");
+	const tabSections = document.querySelectorAll("[data-contact-section]");
+	let previousBodyOverflow = "";
+	let assistantBusy = false;
+	let assistantConversation = [{ role: "assistant", text: assistantGreeting }];
+	const maxAssistantMessages = 10;
+
+	function setAssistantStatus(message) {
+		if (assistantStatus) {
+			assistantStatus.textContent = message;
+		}
+	}
+
+	function trimAssistantConversation() {
+		if (assistantConversation.length <= maxAssistantMessages) return;
+		const seed = assistantConversation[0];
+		assistantConversation = [seed, ...assistantConversation.slice(-(maxAssistantMessages - 1))];
+	}
+
+	function renderAssistantMessages() {
+		if (!assistantMessages) return;
+		assistantMessages.innerHTML = "";
+
+		assistantConversation.forEach(({ role, text }) => {
+			const message = document.createElement("div");
+			message.className = `assistant-panel__message assistant-panel__message--${role}`;
+			message.textContent = text;
+			assistantMessages.appendChild(message);
+		});
+
+		if (assistantBusy) {
+			const typing = document.createElement("div");
+			typing.className = "assistant-panel__message assistant-panel__message--assistant assistant-panel__typing";
+			typing.textContent = "Thinking securely...";
+			assistantMessages.appendChild(typing);
+		}
+
+		assistantMessages.scrollTop = assistantMessages.scrollHeight;
+	}
+
+	function resetAssistantConversation() {
+		assistantConversation = [{ role: "assistant", text: assistantGreeting }];
+		assistantBusy = false;
+		setAssistantStatus("Secure server assistant ready");
+		renderAssistantMessages();
+	}
+
+	function openContactPanel(defaultTab = "contact") {
+		if (!panel) return;
+		previousBodyOverflow = document.body.style.overflow;
+		panel.classList.add("is-open");
+		panel.setAttribute("aria-hidden", "false");
+		document.body.style.overflow = "hidden";
+		activateTab(defaultTab);
+	}
+
+	function closeContactPanel() {
+		if (!panel) return;
+		panel.classList.remove("is-open");
+		panel.setAttribute("aria-hidden", "true");
+		document.body.style.overflow = previousBodyOverflow;
+	}
+
+	function activateTab(tabName) {
+		tabButtons.forEach((button) => {
+			const isActive = button.getAttribute("data-contact-tab") === tabName;
+			button.classList.toggle("is-active", isActive);
+			button.setAttribute("aria-selected", String(isActive));
+		});
+
+		tabSections.forEach((section) => {
+			section.classList.toggle(
+				"is-active",
+				section.getAttribute("data-contact-section") === tabName,
+			);
+		});
+
+		if (tabName === "assistant" && assistantInput) {
+			assistantInput.focus();
+		}
+	}
+
+	function appendAssistantMessage(role, text) {
+		assistantConversation.push({ role, text });
+		trimAssistantConversation();
+		renderAssistantMessages();
+	}
+
+	async function requestAssistantReply(rawInput) {
+		const response = await fetch("/api/ask-rey", {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({
+				message: rawInput,
+				history: assistantConversation.slice(-8),
+			}),
+		});
+
+		if (!response.ok) {
+			throw new Error(`Assistant request failed with status ${response.status}`);
+		}
+
+		const data = await response.json();
+		if (!data?.reply) {
+			throw new Error("Assistant returned an empty response");
+		}
+
+		return data;
+	}
+
+	async function sendAssistantMessage(rawInput) {
+		const value = rawInput.trim();
+		if (!value || assistantBusy) return;
+
+		appendAssistantMessage("user", value);
+		assistantBusy = true;
+		setAssistantStatus("Secure assistant is responding...");
+		renderAssistantMessages();
+
+		try {
+			const data = await requestAssistantReply(value);
+			appendAssistantMessage("assistant", data.reply);
+			if (data.mode === "gemini") {
+				setAssistantStatus("Secure Gemini mode ready");
+			} else if (data.mode === "rate_limited") {
+				setAssistantStatus("Gemini rate limited, using secure fallback");
+			} else {
+				setAssistantStatus("Server fallback mode ready");
+			}
+		} catch (error) {
+			console.error(error);
+			appendAssistantMessage("assistant", `The secure assistant is temporarily unavailable. Reach Rey at ${contactEmail} or try again in a moment.`);
+			setAssistantStatus("Secure assistant unavailable");
+		} finally {
+			assistantBusy = false;
+			renderAssistantMessages();
+		}
+	}
+
+	resetAssistantConversation();
+
+	document.addEventListener("click", (event) => {
+		const target = event.target;
+		if (!(target instanceof HTMLElement)) return;
+
+		const openButton = target.closest("[data-open-contact-panel]");
+		if (openButton) {
+			event.preventDefault();
+			const defaultTab = openButton.getAttribute("data-default-tab") || "contact";
+			openContactPanel(defaultTab);
+			return;
+		}
+
+		if (target.closest("[data-close-contact-panel]")) {
+			closeContactPanel();
+			return;
+		}
+
+		const tabButton = target.closest("[data-contact-tab]");
+		if (tabButton) {
+			activateTab(tabButton.getAttribute("data-contact-tab") || "contact");
+			return;
+		}
+
+		const promptButton = target.closest("[data-assistant-prompt]");
+		if (promptButton instanceof HTMLElement) {
+			const prompt = promptButton.getAttribute("data-assistant-prompt") || "";
+			void sendAssistantMessage(prompt);
+		}
+	});
+
+	window.addEventListener("contact-panel:open", (event) => {
+		const detail = event.detail;
+		const defaultTab = detail && typeof detail === "object" && "tab" in detail ? detail.tab : "contact";
+		openContactPanel(defaultTab);
+	});
+
+	document.addEventListener("keydown", (event) => {
+		if (event.key === "Escape" && panel?.classList.contains("is-open")) {
+			closeContactPanel();
+		}
+	});
+
+	form?.addEventListener("submit", (event) => {
+		event.preventDefault();
+		const formData = new FormData(form);
+		const name = String(formData.get("name") || "").trim();
+		const email = String(formData.get("email") || "").trim();
+		const message = String(formData.get("message") || "").trim();
+
+		const subject = `Portfolio inquiry from ${name}`;
+		const body = `Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`;
+		window.location.href = `mailto:${contactEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+		if (formStatus) {
+			formStatus.textContent = "Your email app should open with a drafted message.";
+		}
+	});
+
+	assistantReset?.addEventListener("click", () => {
+		resetAssistantConversation();
+		if (assistantInput instanceof HTMLInputElement) {
+			assistantInput.value = "";
+			assistantInput.focus();
+		}
+	});
+
+	assistantForm?.addEventListener("submit", (event) => {
+		event.preventDefault();
+		if (!(assistantInput instanceof HTMLInputElement)) return;
+		const value = assistantInput.value.trim();
+		if (!value) return;
+
+		assistantInput.value = "";
+		void sendAssistantMessage(value);
+	});
+</script>

@@ -165,10 +165,7 @@ const sections = parseContent(cleanedContent);
         }}
     >
         {
-            sections.map((section, _) => {
-                {
-                    console.log(section.type, "blog content section");
-                }
+            sections.map((section) => {
                 if (section.type === "heading") {
                     if (section.level === 1) {
                         return (
@@ -243,7 +240,6 @@ const sections = parseContent(cleanedContent);
                         />
                     );
                 } else {
-                    console.log(section.content, "blog content section");
                     return <div set:html={formatText(section.content)} />;
                 }
             })

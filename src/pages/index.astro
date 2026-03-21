@@ -5,6 +5,18 @@ import Footer from "../components/Footer.astro";
 import Header from "../components/Header.astro";
 import { SITE_DESCRIPTION, SITE_TITLE, terminalConfig } from "../consts";
 import { resumePdfPath, terminalResumeLines } from "../data/resume";
+
+const desktopWelcomeMark = [
+	"██╗ █████╗ ███╗   ███╗██████╗ ███████╗██╗   ██╗",
+	"██║██╔══██╗████╗ ████║██╔══██╗██╔════╝╚██╗ ██╔╝",
+	"██║███████║██╔████╔██║██████╔╝█████╗   ╚████╔╝ ",
+	"██║██╔══██║██║╚██╔╝██║██╔══██╗██╔══╝    ╚██╔╝  ",
+	"██║██║  ██║██║ ╚═╝ ██║██║  ██║███████╗   ██║   ",
+	"╚═╝╚═╝  ╚═╝╚═╝     ╚═╝╚═╝  ╚═╝╚══════╝   ╚═╝   ",
+];
+
+const desktopWelcomeMeta = "iamrey.dev // developer terminal";
+const mobileWelcomeMark = ["iamrey.dev", "developer terminal"];
 ---
 
 <!doctype html>
@@ -22,10 +34,10 @@ import { resumePdfPath, terminalResumeLines } from "../data/resume";
 		>
 			<Header />
 
-			<main>
+			<main class="flex-1">
 				<div
 					id="terminal-container"
-					class="pt-0 font-mono space-y-1 overflow-y-auto h-[calc(100vh-160px)] max-w-screen-xl mx-auto p-2 sm:p-4"
+					class="terminal-scroll pt-0 font-mono space-y-2 min-h-[calc(100dvh-8rem)] overflow-visible max-w-screen-xl mx-auto w-full p-3 sm:p-4 sm:h-[calc(100dvh-160px)] sm:overflow-y-auto"
 					style={{
 						backgroundColor: "var(--theme-background)",
 						color: "var(--theme-text)",
@@ -36,7 +48,7 @@ import { resumePdfPath, terminalResumeLines } from "../data/resume";
 					
 					<!-- Terminal Prompt -->
 					<div
-						class="flex items-center pt-2 text-sm sm:text-base"
+						class="input-shell flex flex-wrap items-center gap-2 pt-2 px-2 sm:px-0 text-sm sm:text-base"
 						style={{ color: "var(--theme-commandText)" }}
 					>
 						<span
@@ -56,8 +68,9 @@ import { resumePdfPath, terminalResumeLines } from "../data/resume";
 							>$
 						</span>
 						<input
+							id="terminal-input"
 							type="text"
-							class="bg-transparent border-none outline-none flex-1 font-mono text-sm sm:text-base"
+							class="bg-transparent border-none outline-none flex-1 min-w-0 font-mono text-base sm:text-base py-2"
 							style={{ color: "var(--theme-text)" }}
 						/>
 					</div>
@@ -68,30 +81,65 @@ import { resumePdfPath, terminalResumeLines } from "../data/resume";
 						style={{ color: "var(--theme-primary)" }}
 					>
 						<div
-							class="rounded-lg p-4 sm:p-6 shadow-lg"
+							class="rounded-lg p-4 sm:p-6 shadow-lg overflow-hidden"
 							style={{
 								border: `2px solid var(--theme-welcomeBoxBorder)`,
 								backgroundColor: "var(--theme-welcomeBoxBg)",
 							}}
 						>
-							<div class="text-center mb-4">
-								<div class="text-2xl sm:text-3xl mb-2">
+							{
+								desktopWelcomeMark.length > 0 && (
+									<>
+										<div class="hidden md:flex flex-col items-center mb-5 gap-2 overflow-x-auto">
+											<pre
+												class="welcome-ascii w-fit text-[0.86rem] lg:text-[1.02rem] xl:text-[1.08rem] leading-[0.96] whitespace-pre mx-auto"
+												style={{ color: "var(--theme-primary)" }}
+											>{desktopWelcomeMark.join("\n")}</pre>
+											<p
+												class="text-xs uppercase tracking-[0.32em]"
+												style={{ color: "var(--theme-info)" }}
+											>
+												{desktopWelcomeMeta}
+											</p>
+										</div>
+										<div class="md:hidden flex justify-center mb-4">
+											<div
+												class="rounded-2xl px-4 py-3 text-center border min-w-[15rem]"
+												style={{
+													borderColor: "var(--theme-welcomeBoxBorder)",
+													backgroundColor: "color-mix(in srgb, var(--theme-background) 70%, transparent)",
+												}}
+											>
+												<pre
+													class="welcome-ascii-mobile text-[1rem] font-bold leading-tight whitespace-pre-wrap"
+													style={{ color: "var(--theme-primary)" }}
+												>{mobileWelcomeMark.join("\n")}</pre>
+											</div>
+										</div>
+									</>
+								)
+							}
+							<div class="text-center mb-4 sm:mb-5">
+								<div class="hidden sm:block text-2xl sm:text-3xl mb-2">
 									╭────────────────────────────╮
+								</div>
+								<div class="sm:hidden inline-flex rounded-full px-3 py-1 text-xs border" style={{ borderColor: "var(--theme-welcomeBoxBorder)", color: "var(--theme-primary)" }}>
+									terminal session active
 								</div>
 								<div
 									id="welcome-title"
-									class="text-l sm:text-xl font-bold mb-1"
+									class="text-base sm:text-xl font-bold mb-1 px-2 sm:px-0"
 									style={{ color: "var(--theme-primary)" }}
 								>
 									> Welcome to {terminalConfig.hostname} Terminal
 								</div>
-								<div class="text-2xl sm:text-3xl mb-3">
+								<div class="hidden sm:block text-2xl sm:text-3xl mb-3">
 									╰────────────────────────────╯
 								</div>
 							</div>
 
 							<div
-								class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4"
+								class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 mb-4"
 							>
 								<div
 									class="rounded p-3"
@@ -241,7 +289,7 @@ import { resumePdfPath, terminalResumeLines } from "../data/resume";
 		caret-color: #22c55e;
 	}
 </style>
-<script define:vars={{ resumePdfPath, terminalResumeLines }}>
+<script define:vars={{ resumePdfPath, terminalResumeLines, terminalHostname: terminalConfig.hostname }}>
 	// ── Typing animation on welcome title ──────────────────────────────────
 	const welcomeTitle = document.getElementById("welcome-title");
 	if (welcomeTitle) {
@@ -263,7 +311,7 @@ import { resumePdfPath, terminalResumeLines } from "../data/resume";
 	}
 
 	// ── Terminal input logic ───────────────────────────────────────────────
-	const inputCapture = document.querySelector("input");
+	const inputCapture = document.getElementById("terminal-input");
 	if (inputCapture) {
 		const commandHistory = [];
 		let historyIndex = -1;
@@ -271,7 +319,19 @@ import { resumePdfPath, terminalResumeLines } from "../data/resume";
 		let gameState = null;
 
 		inputCapture.focus();
-		document.addEventListener("click", () => inputCapture.focus());
+		document.addEventListener("click", (event) => {
+			const target = event.target;
+			if (!(target instanceof HTMLElement)) return;
+
+			const contactPanel = document.getElementById("contact-panel");
+			if (contactPanel?.classList.contains("is-open")) {
+				return;
+			}
+
+			if (target.closest("#terminal-container")) {
+				inputCapture.focus();
+			}
+		});
 
 		function clearTerminal() {
 			const commandOutput = document.getElementById("command-output");
@@ -280,6 +340,25 @@ import { resumePdfPath, terminalResumeLines } from "../data/resume";
 				commandOutput.style.display = "none";
 			}
 			inputCapture.value = "";
+		}
+
+		function showHomeState(commandStr) {
+			const welcomeBox = document.getElementById("welcome-box");
+			if (welcomeBox) {
+				welcomeBox.style.display = "block";
+			}
+
+			const commandOutput = document.getElementById("command-output");
+			if (commandOutput) {
+				commandOutput.innerHTML = "";
+				commandOutput.style.display = "none";
+			}
+
+			renderOutput([
+				"Returned to home.",
+				"Type 'cd profile' to view profile details or 'help' for commands.",
+				"",
+			], "var(--theme-muted)", commandStr);
 		}
 
 		function exitGame(gameName) {
@@ -495,7 +574,10 @@ import { resumePdfPath, terminalResumeLines } from "../data/resume";
 				} else if (command === "resume" || command === "cv" || command === "open resume" || command === "./resume" || command === "./ resume") {
 					window.location.href = "/resume";
 
-				} else if (command === "cd profile" || command === "cd ~" || command === "cd~" || command === "cd home" || command === "cd") {
+				} else if (command === "cd" || command === "cd ~" || command === "cd~" || command === "cd home") {
+					showHomeState(commandStr);
+
+				} else if (command === "cd profile") {
 					renderOutput([
 						"┌──────────────────────────────────────────────────┐",
 						"│                  👤  PROFILE                      │",
@@ -520,7 +602,7 @@ import { resumePdfPath, terminalResumeLines } from "../data/resume";
 						"  🌐 Social Links:",
 						"    • GitHub   : https://github.com/reycxz",
 						"    • LinkedIn : https://www.linkedin.com/in/reylorenzc/",
-						"    • Messenger: https://m.me/ReylorenzCabanog",
+						"    • Ping Me  : Use 'ping me' or 'ping iamrey.dev'",
 						"",
 						"  ⚡ Fun Fact : I am a working student. I juggle work and class.",
 						""
@@ -575,12 +657,19 @@ import { resumePdfPath, terminalResumeLines } from "../data/resume";
 						"  GitHub   : https://github.com/reycxz",
 						"  LinkedIn : https://www.linkedin.com/in/reylorenzc/",
 						"  Email    : reylorenzc@gmail.com",
-						"  Messenger: https://m.me/ReylorenzCabanog",
+						"  Tip      : type 'ping me' to open the contact panel",
 						"",
-						"  Tip: type 'open github', 'open linkedin', or 'open messenger'",
-						"       to open links directly in a new tab.",
+						"  You can also type 'open github' or 'open linkedin'.",
 						""
 					], "var(--theme-info)", commandStr);
+
+				} else if (command === "ping me" || command === "ping iamrey.dev" || command === "open contact") {
+					window.dispatchEvent(new CustomEvent("contact-panel:open", { detail: { tab: "contact" } }));
+					renderOutput(["  ↗ Opening contact panel...", ""], "var(--theme-primary)", commandStr);
+
+				} else if (command === "ask rey" || command === "chat") {
+					window.dispatchEvent(new CustomEvent("contact-panel:open", { detail: { tab: "assistant" } }));
+					renderOutput(["  ↗ Opening Rey assistant...", ""], "var(--theme-primary)", commandStr);
 
 				} else if (command === "open github" || command === "gh" || command === "github" || command === "git" || command === "./gh" || command === "git://gh") {
 					window.open("https://github.com/reycxz", "_blank", "noopener,noreferrer");
@@ -591,8 +680,8 @@ import { resumePdfPath, terminalResumeLines } from "../data/resume";
 					renderOutput(["  ↗ Opening LinkedIn profile in a new tab...", ""], "var(--theme-primary)", commandStr);
 
 				} else if (command === "open messenger" || command === "messenger" || command === "@messenger") {
-					window.open("https://m.me/ReylorenzCabanog", "_blank", "noopener,noreferrer");
-					renderOutput(["  ↗ Opening Messenger in a new tab...", ""], "var(--theme-primary)", commandStr);
+					window.dispatchEvent(new CustomEvent("contact-panel:open", { detail: { tab: "contact" } }));
+					renderOutput(["  ↗ Opening contact panel...", ""], "var(--theme-primary)", commandStr);
 
 				} else if (command === "download resume") {
 					window.open(resumePdfPath, "_blank", "noopener,noreferrer");
@@ -616,7 +705,7 @@ import { resumePdfPath, terminalResumeLines } from "../data/resume";
 						"  resume     - Open the resume page",
 						"  blogs      - Open blog posts",
 						"  projects   - Open projects page",
-						"  messenger  - Open Messenger",
+						"  ping me    - Open the contact panel",
 						"  gh         - Open GitHub",
 						"",
 						"These match the labels shown in the top navigation.",
@@ -662,9 +751,11 @@ import { resumePdfPath, terminalResumeLines } from "../data/resume";
 						"",
 						"  Contact:",
 						"   contact          — Show all contact links",
+						"   ping me          — Open the contact panel",
+						"   ask rey / chat   — Open the Rey assistant",
 						"   open github      — Open GitHub in new tab",
 						"   open linkedin    — Open LinkedIn in new tab",
-						"   open messenger   — Open Messenger in new tab",
+						"   open contact     — Open the contact panel",
 						"   download resume  — Open original resume PDF",
 						"",
 						"  Misc:",
@@ -760,8 +851,8 @@ import { resumePdfPath, terminalResumeLines } from "../data/resume";
 					"shortcuts", "nav",
 					"clear", "cat resume.txt", "resume", "cv", "open resume", "games",
 					"numberguess", "rps", "wordle", "cd projects", "cd blogs", "cd profile", "cd ~",
-					"projects", "blogs", "./projects", "./blogs", "./resume", "gh", "git", "messenger", "@messenger",
-					"ls", "ll", "open github", "open linkedin", "open messenger", "download resume", "exit"
+					"projects", "blogs", "./projects", "./blogs", "./resume", "gh", "git", "ping me", "ping iamrey.dev", "ask rey", "chat", "messenger", "@messenger",
+					"ls", "ll", "open github", "open linkedin", "open contact", "open messenger", "download resume", "exit"
 				];
 				const match = commands.find(cmd => cmd.startsWith(current));
 				if (match) inputCapture.value = match;
@@ -775,26 +866,50 @@ import { resumePdfPath, terminalResumeLines } from "../data/resume";
 			commandOutput.style.display = "block";
 
 			const outputDiv = document.createElement("div");
-			outputDiv.className = "space-y-1 mt-4";
+			outputDiv.className = "space-y-2 mt-4";
 
 			if (cmdString) {
 				const cmdStrDiv = document.createElement("div");
-				cmdStrDiv.className = "ml-2 sm:ml-4 text-sm sm:text-base mb-2";
-				cmdStrDiv.style.color = "var(--theme-commandText)";
-				cmdStrDiv.innerHTML = `<span style="color:var(--theme-promptUser)">user@iamrey.dev</span><span style="color:var(--theme-text)">:</span><span style="color:var(--theme-promptPath)">~</span><span style="color:var(--theme-promptSymbol)">$</span> ${cmdString}`;
+				cmdStrDiv.className = "pl-2 sm:pl-4 text-sm sm:text-base mb-1 flex flex-wrap items-center gap-1 min-w-0";
+
+				const promptUser = document.createElement("span");
+				promptUser.style.color = "var(--theme-promptUser)";
+				promptUser.textContent = `user@${terminalHostname}`;
+
+				const promptColon = document.createElement("span");
+				promptColon.style.color = "var(--theme-text)";
+				promptColon.textContent = ":";
+
+				const promptPath = document.createElement("span");
+				promptPath.style.color = "var(--theme-promptPath)";
+				promptPath.textContent = "~";
+
+				const promptSymbol = document.createElement("span");
+				promptSymbol.style.color = "var(--theme-promptSymbol)";
+				promptSymbol.textContent = "$";
+
+				const commandText = document.createElement("span");
+				commandText.style.color = "var(--theme-commandText)";
+				commandText.textContent = cmdString;
+
+				cmdStrDiv.append(promptUser, promptColon, promptPath, promptSymbol, commandText);
 				outputDiv.appendChild(cmdStrDiv);
 			}
 
 			const innerDiv = document.createElement("div");
-			innerDiv.className = "ml-2 sm:ml-4 text-sm sm:text-base";
+			innerDiv.className = "pl-2 sm:pl-4 text-sm sm:text-base space-y-1";
 
 			lines.forEach(line => {
 				const lineDiv = document.createElement("div");
-				lineDiv.className = "break-words";
+				lineDiv.className = "break-words min-w-0";
 				lineDiv.style.color = defaultColor || "var(--theme-outputText)";
 				const pre = document.createElement("pre");
 				pre.style.fontFamily = "inherit";
+				pre.style.margin = "0";
 				pre.style.whiteSpace = "pre-wrap";
+				pre.style.overflowWrap = "anywhere";
+				pre.style.wordBreak = "break-word";
+				pre.style.lineHeight = "1.6";
 				pre.textContent = line;
 				lineDiv.appendChild(pre);
 				innerDiv.appendChild(lineDiv);

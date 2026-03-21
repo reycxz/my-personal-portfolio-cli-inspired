@@ -1,6 +1,6 @@
 @import "tailwindcss";
 
---root {
+:root {
 	--theme-background: #000000;
 	--theme-text: #ffffff;
 	--theme-h1: #22c55e;
@@ -153,4 +153,111 @@
 	--theme-welcomeBoxBorder: #0ea5e9;
 	--theme-fontFamily: "Cascadia Code", "Cascadia Mono", "Monaco", "Consolas", monospace;
 	/* --theme-fontFamily: "'Cascadia Code'"; */
+}
+
+html {
+	scroll-behavior: smooth;
+	background-color: var(--theme-background);
+}
+
+body {
+	margin: 0;
+	min-width: 320px;
+	overflow-x: hidden;
+	background-color: var(--theme-background);
+	color: var(--theme-text);
+	font-family: var(--theme-fontFamily);
+	-webkit-tap-highlight-color: transparent;
+}
+
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+}
+
+img,
+svg,
+video,
+canvas,
+iframe {
+	max-width: 100%;
+	height: auto;
+}
+
+button,
+input,
+select,
+textarea {
+	font: inherit;
+}
+
+a,
+p,
+span {
+	overflow-wrap: anywhere;
+}
+
+#terminal-container,
+#all-repo-grid,
+.repo-card {
+	min-width: 0;
+}
+
+.terminal-scroll {
+	scrollbar-width: thin;
+	scrollbar-color: var(--theme-border) transparent;
+	-webkit-overflow-scrolling: touch;
+}
+
+.mobile-scroll {
+	overflow-x: auto;
+	-webkit-overflow-scrolling: touch;
+	scrollbar-width: thin;
+	scrollbar-color: var(--theme-border) transparent;
+}
+
+.touch-target {
+	min-height: 2.75rem;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.safe-px {
+	padding-left: max(0.75rem, env(safe-area-inset-left));
+	padding-right: max(0.75rem, env(safe-area-inset-right));
+}
+
+.safe-pb {
+	padding-bottom: max(0.5rem, env(safe-area-inset-bottom));
+}
+
+.input-shell {
+	min-height: 2.75rem;
+	border-radius: 0.5rem;
+}
+
+@media (max-width: 640px) {
+	html {
+		overflow-x: hidden;
+	}
+
+	body {
+		font-size: 15px;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	html {
+		scroll-behavior: auto;
+	}
+
+	*,
+	*::before,
+	*::after {
+		animation-duration: 0.01ms !important;
+		animation-iteration-count: 1 !important;
+		transition-duration: 0.01ms !important;
+	}
 }

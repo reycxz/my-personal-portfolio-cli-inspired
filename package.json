@@ -4,6 +4,9 @@
   "private": true,
   "version": "2.2.2",
   "type": "module",
+  "engines": {
+    "node": "24.x"
+  },
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
@@ -17,6 +20,7 @@
     "@astrojs/node": "9.5.2",
     "@astrojs/rss": "4.0.15",
     "@astrojs/sitemap": "3.7.0",
+    "@astrojs/vercel": "^9.0.5",
     "@tailwindcss/vite": "^4.1.13",
     "astro": "5.16.16",
     "highlight.js": "^11.11.1",

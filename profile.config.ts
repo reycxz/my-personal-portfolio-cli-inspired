@@ -401,7 +401,7 @@ export const profileConfig: ProfileConfig = {
       { name: "blogs", path: "/blogs", color: "var(--theme-primary)" },
       { name: "projects", path: "/projects", color: "var(--theme-primary)" },
       // { name: "profile", path: "/profile", color: "var(--theme-accent)" },
-      { name: "messenger", path: "https://m.me/reylorenzcabanog", external: true, color: "var(--theme-primary)" },
+      { name: "ping me", path: "#contact", color: "var(--theme-primary)" },
       { name: "gh", path: "https://github.com/reycxz/", external: true, color: "var(--theme-primary)" }
     ],
     systemInfo: {
