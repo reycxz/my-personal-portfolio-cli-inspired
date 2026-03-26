@@ -355,6 +355,20 @@ export const profileConfig: ProfileConfig = {
         primaryLanguages: ["PHP", "Laravel", "JavaScript"],
         updatedAt: "2026-03-20",
         featured: true
+      },
+      {
+        name: "SARI-SARI INVENTORY SYSTEM",
+        description: "A PHP and MySQL inventory management system leveraging a custom MySqli_DB class for secure database operations.",
+        primaryLanguages: ["PHP", "MySQL"],
+        updatedAt: "2026-03-26",
+        featured: true
+      },
+      {
+        name: "Simplex LP Solver",
+        description: "A Python application designed to solve linear programming problems while providing visual representations of the solution process.",
+        primaryLanguages: ["Python"],
+        updatedAt: "2026-03-26",
+        featured: true
       }
     ],
     categories: {

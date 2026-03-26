@@ -318,7 +318,7 @@ const allLanguages = [...new Set(allProjects.flatMap((project) => project.primar
                 const commandStr = input.value.trim();
                 const command = commandStr.toLowerCase();
 
-                if (command === "home" || command === "cd ~" || command === "cd" || command === "cd profile" || command === "cd home") {
+                if (command === "home" || command === "cd ~" || command === "cd" || command === "cd profile" || command === "cd home" || command === "cd cert" || command === "cd certs" || command === "cert" || command === "certs") {
                     window.location.href = "/";
                 } else if (command === "cd blogs" || command === "cd blog" || command === "blogs") {
                     window.location.href = "/blogs";

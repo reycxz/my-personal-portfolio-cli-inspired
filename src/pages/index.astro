@@ -608,6 +608,38 @@ const mobileWelcomeMark = ["iamrey.dev", "developer terminal"];
 						""
 					], "var(--theme-primary)", commandStr);
 
+				} else if (command === "cd cert" || command === "cd certs" || command === "cert" || command === "certs") {
+					renderOutput([
+						"┌──────────────────────────────────────────────────┐",
+						"│               📜  CERTIFICATIONS                 │",
+						"└──────────────────────────────────────────────────┘",
+						"",
+						"  • Digital Forensics & Incident Investigation - Red Team Leaders",
+						"    Adding to my DFIR knowledge. Excited to earn this certification...",
+						"",
+						"  • SOC Operations & DFIR - Blue Cape Security",
+						"    Completed an 8-hour intensive on SOC operations and DFIR.",
+						"",
+						"  • CCNA 1 Certificate of Course Completion",
+						"    Cisco Networking Academy - Introduction to Networks",
+						"",
+						"  • Introduction to Satellites and Remote Sensing",
+						"    Completed Sept 23, 2024",
+						"",
+						"  • Smarter Pest Identification Technology (SPIDTECH)",
+						"    Completed Sept 27, 2024",
+						"",
+						"  • Endpoint Security Certificate",
+						"    Cisco Networking Academy - Oct 14, 2025",
+						"",
+						"  • Cyber Threat Management Certificate",
+						"    Cisco Networking Academy - Sept 25, 2025",
+						"",
+						"  • CCNA 2 Certificate of Course Completion",
+						"    Cisco Networking Academy",
+						""
+					], "var(--theme-info)", commandStr);
+
 				// ── About ─────────────────────────────────────────────────
 				} else if (command === "whoami") {
 					renderOutput([
@@ -744,6 +776,7 @@ const mobileWelcomeMark = ["iamrey.dev", "developer terminal"];
 						"  About:",
 						"   whoami           — Quick identity summary",
 						"   cd profile       — Detailed profile card",
+						"   cd cert          — View certifications",
 						"   cat resume.txt   — View resume",
 						"   resume / cv      — Open printable resume page",
 						"   skills           — List skills & technologies",
@@ -778,6 +811,7 @@ const mobileWelcomeMark = ["iamrey.dev", "developer terminal"];
 				} else if (command === "ls" || command === "ll") {
 					renderOutput([
 						"drwxr-xr-x  user  blogs/",
+						"drwxr-xr-x  user  certs/",
 						"drwxr-xr-x  user  games/",
 						"drwxr-xr-x  user  projects/",
 						"-rw-r--r--  user  resume.cv",
@@ -850,8 +884,8 @@ const mobileWelcomeMark = ["iamrey.dev", "developer terminal"];
 					"help", "whoami", "contact", "neofetch", "skills", "joke", "history",
 					"shortcuts", "nav",
 					"clear", "cat resume.txt", "resume", "cv", "open resume", "games",
-					"numberguess", "rps", "wordle", "cd projects", "cd blogs", "cd profile", "cd ~",
-					"projects", "blogs", "./projects", "./blogs", "./resume", "gh", "git", "ping me", "ping iamrey.dev", "ask rey", "chat", "messenger", "@messenger",
+					"numberguess", "rps", "wordle", "cd projects", "cd blogs", "cd profile", "cd cert", "cd ~",
+					"projects", "blogs", "certs", "cert", "./projects", "./blogs", "./resume", "gh", "git", "ping me", "ping iamrey.dev", "ask rey", "chat", "messenger", "@messenger",
 					"ls", "ll", "open github", "open linkedin", "open contact", "open messenger", "download resume", "exit"
 				];
 				const match = commands.find(cmd => cmd.startsWith(current));
