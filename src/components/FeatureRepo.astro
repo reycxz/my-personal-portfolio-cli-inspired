@@ -14,7 +14,8 @@ const { featuredRepo } = Astro.props;
             featuredRepo.map((repo: ProjectItem, index: number) => (
                 <div
                     id={`project-${index}`}
-                    class="bg-gray-800 border border-gray-600 rounded-lg p-4 hover:bg-gray-750 transition-colors min-w-0"
+                    data-languages={(repo.primaryLanguages ?? []).join(',').toLowerCase()}
+                    class="repo-card bg-gray-800 border border-gray-600 rounded-lg p-4 hover:bg-gray-750 transition-colors min-w-0"
                 >
                     <div class="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between mb-3 min-w-0">
                         <h3 class="text-blue-400 font-semibold text-lg hover:text-blue-300 min-w-0 break-words">
