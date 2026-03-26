@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-03-20T10:16:01.584Z",
+  "lastUpdated": "2026-03-26T03:51:41.789Z",
   "user": {
     "login": "reycxz",
     "name": "rey lo",
@@ -7,7 +7,7 @@
     "bio": "ellie",
     "followers": 0,
     "following": 0,
-    "publicRepos": 12
+    "publicRepos": 11
   },
   "repositories": [
     {
@@ -40,21 +40,89 @@
     }
   ],
   "stats": {
-    "totalRepos": 12,
-    "totalStars": 0,
+    "totalRepos": 11,
+    "totalStars": 2,
     "totalForks": 0,
     "languages": [
       "CSS",
       "JavaScript",
-      "HTML"
+      "HTML",
+      "Astro"
     ],
     "allLanguages": [
+      "Astro",
       "CSS",
       "HTML",
-      "JavaScript"
+      "JavaScript",
+      "TypeScript"
     ]
   },
   "featured": [
+    {
+      "name": "my-personal-portfolio-cli-inspired",
+      "description": "a cli inspired portfolio",
+      "url": "https://github.com/reycxz/my-personal-portfolio-cli-inspired",
+      "homepageUrl": "https://my-personal-portfolio-cli-inspired.vercel.app/",
+      "primaryLanguage": {
+        "name": "Astro"
+      },
+      "primaryLanguages": [
+        "Astro",
+        "TypeScript"
+      ],
+      "languageStats": {
+        "Astro": 134922,
+        "TypeScript": 31933,
+        "JavaScript": 30100,
+        "Python": 10397,
+        "CSS": 5650,
+        "Shell": 4104
+      },
+      "stargazerCount": 1,
+      "forkCount": 0,
+      "createdAt": "2026-03-20T10:44:01Z",
+      "updatedAt": "2026-03-26T03:44:29Z",
+      "pushedAt": "2026-03-26T03:44:26Z",
+      "repositoryTopics": [],
+      "licenseInfo": {
+        "key": "mit",
+        "name": "MIT License",
+        "spdx_id": "MIT",
+        "url": "https://api.github.com/licenses/mit",
+        "node_id": "MDc6TGljZW5zZTEz"
+      },
+      "isPrivate": false,
+      "isFork": false,
+      "isArchived": false
+    },
+    {
+      "name": "wedding-inv-project",
+      "description": "emtech1 final prokect",
+      "url": "https://github.com/reycxz/wedding-inv-project",
+      "homepageUrl": "https://reycxz.github.io/wedding-inv-project/",
+      "primaryLanguage": {
+        "name": "HTML"
+      },
+      "primaryLanguages": [
+        "HTML",
+        "CSS"
+      ],
+      "languageStats": {
+        "HTML": 27619,
+        "CSS": 20529,
+        "JavaScript": 13386
+      },
+      "stargazerCount": 1,
+      "forkCount": 0,
+      "createdAt": "2026-03-19T02:46:21Z",
+      "updatedAt": "2026-03-26T03:26:37Z",
+      "pushedAt": "2026-03-26T03:26:33Z",
+      "repositoryTopics": [],
+      "licenseInfo": null,
+      "isPrivate": false,
+      "isFork": false,
+      "isArchived": false
+    },
     {
       "name": "-LA3.2_Interactive",
       "description": "lab activity 3",
@@ -158,33 +226,6 @@
       "createdAt": "2026-02-12T03:41:38Z",
       "updatedAt": "2026-02-26T04:22:11Z",
       "pushedAt": "2026-02-26T04:22:07Z",
-      "repositoryTopics": [],
-      "licenseInfo": null,
-      "isPrivate": false,
-      "isFork": false,
-      "isArchived": false
-    },
-    {
-      "name": "git-frontend-project",
-      "description": "sample repo only",
-      "url": "https://github.com/reycxz/git-frontend-project",
-      "homepageUrl": null,
-      "primaryLanguage": {
-        "name": "HTML"
-      },
-      "primaryLanguages": [
-        "HTML",
-        "CSS"
-      ],
-      "languageStats": {
-        "HTML": 356,
-        "CSS": 98
-      },
-      "stargazerCount": 0,
-      "forkCount": 0,
-      "createdAt": "2026-01-15T03:52:31Z",
-      "updatedAt": "2026-01-15T04:15:11Z",
-      "pushedAt": "2026-01-15T04:15:07Z",
       "repositoryTopics": [],
       "licenseInfo": null,
       "isPrivate": false,
@@ -297,55 +338,6 @@
       "createdAt": "2026-01-29T04:29:17Z",
       "updatedAt": "2026-01-29T04:36:35Z",
       "pushedAt": "2026-02-26T04:17:52Z",
-      "repositoryTopics": [],
-      "licenseInfo": null,
-      "isPrivate": false,
-      "isFork": false,
-      "isArchived": false
-    },
-    {
-      "name": "wedding-inv-project",
-      "description": "emtech1 final prokect",
-      "url": "https://github.com/reycxz/wedding-inv-project",
-      "homepageUrl": "https://reycxz.github.io/wedding-inv-project/",
-      "primaryLanguage": {
-        "name": "CSS"
-      },
-      "primaryLanguages": [
-        "CSS",
-        "HTML"
-      ],
-      "languageStats": {
-        "CSS": 20529,
-        "HTML": 18363,
-        "JavaScript": 13386
-      },
-      "stargazerCount": 0,
-      "forkCount": 0,
-      "createdAt": "2026-03-19T02:46:21Z",
-      "updatedAt": "2026-03-20T09:07:58Z",
-      "pushedAt": "2026-03-20T09:07:55Z",
-      "repositoryTopics": [],
-      "licenseInfo": null,
-      "isPrivate": false,
-      "isFork": false,
-      "isArchived": false
-    },
-    {
-      "name": "wedding_invitation_project",
-      "description": "a final project in EmTech 1",
-      "url": "https://github.com/reycxz/wedding_invitation_project",
-      "homepageUrl": null,
-      "primaryLanguage": {
-        "name": null
-      },
-      "primaryLanguages": [],
-      "languageStats": {},
-      "stargazerCount": 0,
-      "forkCount": 0,
-      "createdAt": "2026-03-19T02:39:59Z",
-      "updatedAt": "2026-03-19T02:45:17Z",
-      "pushedAt": "2026-03-19T02:45:13Z",
       "repositoryTopics": [],
       "licenseInfo": null,
       "isPrivate": false,
